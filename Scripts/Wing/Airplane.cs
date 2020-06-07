@@ -27,19 +27,17 @@ public class Airplane : MonoBehaviourPun
 	public Transform turret;
 
 	public Rigidbody Rigidbody { get; internal set; }
+	public GameObject explosion;
+	public GameObject smoke;
+	public GameObject plane;
 
 	private float throttle = 1.0f;
 	private bool yawDefined = false;
 	private float fireDeltaMs = 0.2f;
 	private float currentFireDeltaMs = 0;
 	private bool active;
-
 	public float trim;
 
-	private void Awake()
-	{
-		//Rigidbody.velocity = new Vector3(0, 0, 200);
-	}
 
 	private void Start()
 	{
@@ -144,34 +142,7 @@ public class Airplane : MonoBehaviourPun
 	}
 	public void FixedUpdate()
 	{
-		//Debug.Log(rigid.angularVelocity);
 		rigid.AddRelativeTorque(new Vector3(trim * 1000f, 0f, 0f));
-	}
-
-	private float CalculatePitchG()
-	{
-		// Angular velocity is in radians per second.
-		Vector3 localVelocity = transform.InverseTransformDirection(rigid.velocity);
-		Vector3 localAngularVel = transform.InverseTransformDirection(rigid.angularVelocity);
-
-		// Local pitch velocity (X) is positive when pitching down.
-
-		// Radius of turn = velocity / angular velocity
-		float radius = (Mathf.Approximately(localAngularVel.x, 0.0f)) ? float.MaxValue : localVelocity.z / localAngularVel.x;
-
-		// The radius of the turn will be negative when in a pitching down turn.
-
-		// Force is mass * radius * angular velocity^2
-		float verticalForce = (Mathf.Approximately(radius, 0.0f)) ? 0.0f : (localVelocity.z * localVelocity.z) / radius;
-
-		// Express in G (Always relative to Earth G)
-		float verticalG = verticalForce / -9.81f;
-
-		// Add the planet's gravity in. When the up is facing directly up, then the full
-		// force of gravity will be felt in the vertical.
-		verticalG += transform.up.y * (Physics.gravity.y / -9.81f);
-
-		return verticalG;
 	}
 
 	private void OnGUI()
@@ -180,6 +151,32 @@ public class Airplane : MonoBehaviourPun
 		const float msToKnots = 1.94384f;
 		GUI.Label(new Rect(10, 40, 300, 20), string.Format("Speed: {0:0.0} knots", rigid.velocity.magnitude * msToKnots));
 		GUI.Label(new Rect(10, 60, 300, 20), string.Format("Throttle: {0:0.0}%", throttle * 100.0f));
-		GUI.Label(new Rect(10, 80, 300, 20), string.Format("G Load: {0:0.0} G", CalculatePitchG()));
+	}
+
+	public void Damage()
+	{
+
+	}
+
+	public void KillMe()
+	{
+		rigid.isKinematic = true;
+		explosion.SetActive(true);
+		smoke.SetActive(true);
+		plane.SetActive(false);
+	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.tag == "Kill")
+		{//TODO check velocity and if it's wheels that are touching the floor
+			KillMe();
+			Debug.Log("Kill!");
+		}
+		if (collision.gameObject.tag == "Damage")
+		{
+			Damage();
+			Debug.Log("Damage!");
+		}
 	}
 }
