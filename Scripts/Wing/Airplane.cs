@@ -21,7 +21,7 @@ public class Airplane : MonoBehaviourPun
 	public SimpleWing aileronLeftWing;
 	public SimpleWing aileronRighttWing;
 	public Engine engine;
-	public string name = "ME";
+	public float health;
 	public Rigidbody rigid;
 	public Camera camera;
 	public Transform turret;
@@ -153,11 +153,14 @@ public class Airplane : MonoBehaviourPun
 		GUI.Label(new Rect(10, 60, 300, 20), string.Format("Throttle: {0:0.0}%", throttle * 100.0f));
 	}
 
-	public void Damage()
+	[PunRPC]
+	public void DamageMe(float damage)
 	{
-
+		health -= damage;
+		smoke.SetActive(true);
 	}
 
+	[PunRPC]
 	public void KillMe()
 	{
 		rigid.isKinematic = true;
@@ -168,14 +171,18 @@ public class Airplane : MonoBehaviourPun
 
 	void OnCollisionEnter(Collision collision)
 	{
-		if(collision.gameObject.tag == "Kill")
+		if (this.photonView.IsMine == false) return;
+
+		if (collision.gameObject.tag == "Kill")
 		{//TODO check velocity and if it's wheels that are touching the floor
 			KillMe();
+			this.photonView.RPC("KillMe", RpcTarget.Others);
 			Debug.Log("Kill!");
 		}
 		if (collision.gameObject.tag == "Damage")
 		{
-			Damage();
+			DamageMe(collision.gameObject.GetComponent<IDamageHit>().damage);
+			this.photonView.RPC("DamageMe", RpcTarget.Others, 1f);
 			Debug.Log("Damage!");
 		}
 	}

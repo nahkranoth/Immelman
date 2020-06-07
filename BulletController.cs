@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class BulletController : MonoBehaviour, IDamageHit
 {
     public Rigidbody rigidBody;
     private float liveTime = 2f;
     private float timeDelta;
+    public float hitDamage = 1f;
 
-    public void Fire(Vector3 position, Quaternion orientation, Vector3 baseVelocity)
+    public float damage { get { return hitDamage; } }
+
+public void Fire(Vector3 position, Quaternion orientation, Vector3 baseVelocity)
     {
         transform.position = position;
         transform.rotation = orientation;

@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
@@ -28,6 +29,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         GameController.instance.FireBulletFrom(position, orientation, baseVelocity);
     }
+
     public void SendFireBullet(Vector3 position, Quaternion orientation, Vector3 baseVelocity)
     {
         PhotonView photonView = PhotonView.Get(this);
@@ -50,6 +52,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(roomName);
     }
 
+    /*public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
+    }*/
+
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Debug.Log("Create Room Failed");
@@ -67,7 +74,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        Debug.Log("Joined Room");
         PhotonNetwork.Instantiate(this.plane.name, new Vector3(0f, 3000f, 0f), Quaternion.identity, 0).GetComponent<Airplane>();
     }
 

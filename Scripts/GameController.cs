@@ -1,4 +1,6 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviourPun
@@ -7,6 +9,7 @@ public class GameController : MonoBehaviourPun
     public GameObject bulletPrefab;
     public Transform bulletPoolContainer;
     public static GameController instance;
+    public Dictionary<Player, Airplane> playerAirplanes = new Dictionary<Player, Airplane>();
 
     private void Awake()
     {
@@ -19,5 +22,4 @@ public class GameController : MonoBehaviourPun
         var newBulletController = newbullet.GetComponent<BulletController>();
         newBulletController.Fire(position, orientation, baseVelocity);
     }
-
 }
