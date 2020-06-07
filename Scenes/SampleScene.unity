@@ -12875,6 +12875,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: wheelchairGuy
       objectReference: {fileID: 0}
+    - target: {fileID: 5439812621111064346, guid: 47b8c012147efe0469535eb4b683f070,
+        type: 3}
+      propertyPath: m_TagString
+      value: Kill
+      objectReference: {fileID: 0}
     - target: {fileID: 9017685404535751945, guid: 47b8c012147efe0469535eb4b683f070,
         type: 3}
       propertyPath: m_LocalPosition.x

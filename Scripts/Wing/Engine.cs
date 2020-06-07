@@ -3,6 +3,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
+using System.Security.Policy;
 using UnityEngine;
 
 public class Engine : MonoBehaviour
@@ -17,9 +18,22 @@ public class Engine : MonoBehaviour
 
 	public bool active = true;
 
+	public float boostSpeed = 220000f;
+	public float normalSpeed = 60000f;
+
 	private void Awake()
 	{
 		rigid = GetComponentInParent<Rigidbody>();
+	}
+
+	public void Boost()
+	{
+		thrust = boostSpeed;
+	}
+
+	public void EndBoost()
+	{
+		thrust = normalSpeed;
 	}
 
 	private void FixedUpdate()

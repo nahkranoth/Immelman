@@ -30,14 +30,16 @@ public class Airplane : MonoBehaviourPun
 	public GameObject explosion;
 	public GameObject smoke;
 	public GameObject plane;
+	public GameObject waterVapor;
+
+	public float boostSpeed = 220000f;
+	public float trim;
 
 	private float throttle = 1.0f;
 	private bool yawDefined = false;
 	private float fireDeltaMs = 0.2f;
 	private float currentFireDeltaMs = 0;
 	private bool active;
-	public float trim;
-
 
 	private void Start()
 	{
@@ -139,6 +141,18 @@ public class Airplane : MonoBehaviourPun
 			};
 		}
 
+		if (Input.GetMouseButtonDown(1))
+		{
+			engine.Boost();
+			waterVapor.SetActive(true);
+		}
+
+		if (Input.GetMouseButtonUp(1))
+		{
+			engine.EndBoost();
+			waterVapor.SetActive(false);
+		}
+
 	}
 	public void FixedUpdate()
 	{
@@ -158,6 +172,13 @@ public class Airplane : MonoBehaviourPun
 	{
 		health -= damage;
 		smoke.SetActive(true);
+
+		if(health <= 0)
+		{
+			KillMe();
+			this.photonView.RPC("KillMe", RpcTarget.Others);
+		}
+
 	}
 
 	[PunRPC]
