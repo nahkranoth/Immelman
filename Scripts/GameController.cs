@@ -18,6 +18,12 @@ public class GameController : MonoBehaviourPun
         instance = this;
     }
 
+    public void PlayerAirplaneInit(Airplane ownPlane)
+    {
+        this.ownPlane = ownPlane;
+        UIController.instance.SetCamera(ownPlane.camera);
+    }
+
     public void RespawnAirplane()
     {
         ownPlane.CallResetMe();

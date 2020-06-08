@@ -212,8 +212,10 @@ public class Airplane : MonoBehaviourPun
 		smoke.SetActive(false);
 		plane.SetActive(true);
 		transform.position = GameController.instance.startPosition;
+		transform.rotation = Quaternion.identity;
 		rigid.isKinematic = false;
 		if (this.photonView.IsMine == false) return;
+		engine.throttle = 100f;
 		UIController.instance.ToggleResetButton(false);
 	}
 

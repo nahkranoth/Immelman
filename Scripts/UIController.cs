@@ -6,8 +6,13 @@ using UnityEngine;
 public class UIController : MonoBehaviour
 {
     public static UIController instance;
-
+    public Canvas canvas;
     public GameObject resetButton;
+
+    public void SetCamera(Camera camera)
+    {
+        canvas.worldCamera = camera;
+    }
 
     private void Awake()
     {
