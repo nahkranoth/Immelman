@@ -9,11 +9,18 @@ public class GameController : MonoBehaviourPun
     public GameObject bulletPrefab;
     public Transform bulletPoolContainer;
     public static GameController instance;
-    public Dictionary<Player, Airplane> playerAirplanes = new Dictionary<Player, Airplane>();
+    public Airplane ownPlane;
+
+    public Vector3 startPosition = new Vector3(0f, 3000f, 0f);
 
     private void Awake()
     {
         instance = this;
+    }
+
+    public void RespawnAirplane()
+    {
+        ownPlane.CallResetMe();
     }
 
     public void FireBulletFrom(Vector3 position, Quaternion orientation, Vector3 baseVelocity)

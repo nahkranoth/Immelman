@@ -188,6 +188,26 @@ public class Airplane : MonoBehaviourPun
 		explosion.SetActive(true);
 		smoke.SetActive(true);
 		plane.SetActive(false);
+		if (this.photonView.IsMine == false) return;
+		UIController.instance.ToggleResetButton(true);
+	}
+
+	[PunRPC]
+	public void ResetMe()
+	{
+		explosion.SetActive(false);
+		smoke.SetActive(false);
+		plane.SetActive(true);
+		transform.position = GameController.instance.startPosition;
+		rigid.isKinematic = false;
+		if (this.photonView.IsMine == false) return;
+		UIController.instance.ToggleResetButton(false);
+	}
+
+	public void CallResetMe()
+	{
+		ResetMe();
+		this.photonView.RPC("ResetMe", RpcTarget.Others);
 	}
 
 	void OnCollisionEnter(Collision collision)
