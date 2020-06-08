@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -8603237011859348017}
   - component: {fileID: 1850828537}
   - component: {fileID: 1850828538}
+  - component: {fileID: 5241893787754531576}
   m_Layer: 0
   m_Name: FighterJet
   m_TagString: Untagged
@@ -142,8 +143,21 @@ MonoBehaviour:
   smoke: {fileID: 7195926377211314967}
   plane: {fileID: 702619442766811058}
   waterVapor: {fileID: 8859093358190638613}
+  myTarget: {fileID: 5241893787754531576}
   boostSpeed: 220000
   trim: 40
+--- !u!114 &5241893787754531576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281116439405552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de31c3315c3ffa3429386efec2e53973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1680179356352116
 GameObject:
   m_ObjectHideFlags: 0

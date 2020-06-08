@@ -43,6 +43,7 @@ public class UIController : MonoBehaviour
         foreach (var pair in trackerTargets)
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(pair.target.transform.position);
+            if (screenPos.z < 0f) continue;
             pair.tracker.anchoredPosition = new Vector3(screenPos.x, screenPos.y, 0f);
         }
     }

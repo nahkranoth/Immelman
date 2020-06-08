@@ -32,6 +32,8 @@ public class Airplane : MonoBehaviourPun
 	public GameObject plane;
 	public GameObject waterVapor;
 
+	public Target myTarget;
+
 	public float boostSpeed = 220000f;
 	public float trim;
 
@@ -85,6 +87,7 @@ public class Airplane : MonoBehaviourPun
 			aileronRighttWing.active = false;
 			aileronLeftWing.active = false;
 			camera.gameObject.SetActive(false);
+			UIController.instance.RegisterTarget(myTarget);
 		}
 		active = true;
 	}
