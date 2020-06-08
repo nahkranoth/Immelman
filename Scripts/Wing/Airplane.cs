@@ -143,17 +143,30 @@ public class Airplane : MonoBehaviourPun
 
 		if (Input.GetMouseButtonDown(1))
 		{
-			engine.Boost();
-			waterVapor.SetActive(true);
+			this.photonView.RPC("StartBoost", RpcTarget.All);
 		}
 
 		if (Input.GetMouseButtonUp(1))
 		{
-			engine.EndBoost();
-			waterVapor.SetActive(false);
+			this.photonView.RPC("EndBoost", RpcTarget.All);
 		}
 
 	}
+	[PunRPC]
+	public void StartBoost()
+	{
+		waterVapor.SetActive(true);
+		if (this.photonView.IsMine == false) return;
+		engine.Boost();
+	}
+	[PunRPC]
+	public void EndBoost()
+	{
+		waterVapor.SetActive(false);
+		if (this.photonView.IsMine == false) return;
+		engine.EndBoost();
+	}
+
 	public void FixedUpdate()
 	{
 		rigid.AddRelativeTorque(new Vector3(trim * 1000f, 0f, 0f));
