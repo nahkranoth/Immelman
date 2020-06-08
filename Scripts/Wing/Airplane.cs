@@ -42,6 +42,7 @@ public class Airplane : MonoBehaviourPun
 	private float fireDeltaMs = 0.2f;
 	private float currentFireDeltaMs = 0;
 	private bool active;
+	private RectTransform myTracker;
 
 	private void Start()
 	{
@@ -72,7 +73,7 @@ public class Airplane : MonoBehaviourPun
 
 	public void SetActive()
 	{
-		if (this.photonView.IsMine == false)
+		if (this.photonView.IsMine == false)//only for remote
 		{
 			elevator.active = false;
 			aileronLeft.active = false;
@@ -87,7 +88,8 @@ public class Airplane : MonoBehaviourPun
 			aileronRighttWing.active = false;
 			aileronLeftWing.active = false;
 			camera.gameObject.SetActive(false);
-			UIController.instance.RegisterTarget(myTarget);
+			myTracker = UIController.instance.RegisterTarget(myTarget);//TODO Remove use below
+			GameController.instance.RegisterOtherPlayerAirplane(this.photonView.Owner, this);
 		}
 		active = true;
 	}
@@ -201,25 +203,42 @@ public class Airplane : MonoBehaviourPun
 	public void KillMe()
 	{
 		rigid.isKinematic = true;
+		active = false;
 		explosion.SetActive(true);
 		smoke.SetActive(true);
 		plane.SetActive(false);
-		if (this.photonView.IsMine == false) return;
-		UIController.instance.ToggleResetButton(true);
+
+		if (this.photonView.IsMine == false)//only for remote
+		{
+			Debug.Log("Hide Tracker");
+			myTracker.gameObject.SetActive(false);
+		}
+		else //Only for Local
+		{
+			UIController.instance.ToggleResetButton(true);
+		}
 	}
 
 	[PunRPC]
 	public void ResetMe()
 	{
+		active = true;
 		explosion.SetActive(false);
 		smoke.SetActive(false);
 		plane.SetActive(true);
 		transform.position = GameController.instance.startPosition;
 		transform.rotation = Quaternion.identity;
 		rigid.isKinematic = false;
-		if (this.photonView.IsMine == false) return;
-		engine.throttle = 100f;
-		UIController.instance.ToggleResetButton(false);
+		if (this.photonView.IsMine == false)//only for remote
+		{
+			myTracker.gameObject.SetActive(true);
+			myTracker.anchoredPosition = new Vector3(9999f, 9999f, 9999f);
+		}
+		else //Only for Local
+		{
+			engine.throttle = 100f;
+			UIController.instance.ToggleResetButton(false);
+		}
 	}
 
 	public void CallResetMe()
@@ -236,13 +255,11 @@ public class Airplane : MonoBehaviourPun
 		{//TODO check velocity and if it's wheels that are touching the floor
 			KillMe();
 			this.photonView.RPC("KillMe", RpcTarget.Others);
-			Debug.Log("Kill!");
 		}
 		if (collision.gameObject.tag == "Damage")
 		{
 			DamageMe(collision.gameObject.GetComponent<IDamageHit>().damage);
 			this.photonView.RPC("DamageMe", RpcTarget.Others, 1f);
-			Debug.Log("Damage!");
 		}
 	}
 }

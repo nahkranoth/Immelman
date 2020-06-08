@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameController : MonoBehaviourPun
@@ -10,7 +11,7 @@ public class GameController : MonoBehaviourPun
     public Transform bulletPoolContainer;
     public static GameController instance;
     public Airplane ownPlane;
-
+    public Dictionary<Player, Airplane> otherPlayersToAirplanes = new Dictionary<Player, Airplane>();
     public Vector3 startPosition = new Vector3(0f, 3000f, 0f);
 
     private void Awake()
@@ -22,6 +23,17 @@ public class GameController : MonoBehaviourPun
     {
         this.ownPlane = ownPlane;
         UIController.instance.SetCamera();
+    }
+
+    public void RegisterOtherPlayerAirplane(Player player, Airplane airplane)
+    {
+        otherPlayersToAirplanes.Add(player, airplane);
+    }
+
+    public void UnregisterOtherPlayerAirplane(Player player)
+    {
+        UIController.instance.UnregisterTarget(otherPlayersToAirplanes[player].myTarget);
+        otherPlayersToAirplanes.Remove(player);
     }
 
     public void RespawnAirplane()
