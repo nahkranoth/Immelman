@@ -11,6 +11,7 @@ public class GameController : MonoBehaviourPun
     public Transform bulletPoolContainer;
     public static GameController instance;
     public Airplane ownPlane;
+    public CameraController cameraController;
     public Dictionary<Player, Airplane> otherPlayersToAirplanes = new Dictionary<Player, Airplane>();
     public Vector3 startPosition = new Vector3(0f, 3000f, 0f);
 
@@ -22,6 +23,7 @@ public class GameController : MonoBehaviourPun
     public void PlayerAirplaneInit(Airplane ownPlane)
     {
         this.ownPlane = ownPlane;
+        cameraController.Follow(ownPlane.cameraGimbal.transform, ownPlane.transform);
         UIController.instance.SetCamera();
     }
 

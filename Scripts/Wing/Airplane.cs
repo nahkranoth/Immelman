@@ -23,7 +23,6 @@ public class Airplane : MonoBehaviourPun
 	public Engine engine;
 	public float health;
 	public Rigidbody rigid;
-	public Camera camera;
 	public Transform turret;
 
 	public Rigidbody Rigidbody { get; internal set; }
@@ -33,6 +32,9 @@ public class Airplane : MonoBehaviourPun
 	public GameObject waterVapor;
 
 	public Target myTarget;
+	public Transform cameraGimbal;
+	public TrailRenderer leftTrail;
+	public TrailRenderer rightTrail;
 
 	public float boostSpeed = 220000f;
 	public float trim;
@@ -87,7 +89,7 @@ public class Airplane : MonoBehaviourPun
 			elevatorWing.active = false;
 			aileronRighttWing.active = false;
 			aileronLeftWing.active = false;
-			camera.gameObject.SetActive(false);
+			Camera.main.gameObject.SetActive(false);
 			myTracker = UIController.instance.RegisterTarget(myTarget);//TODO Remove use below
 			GameController.instance.RegisterOtherPlayerAirplane(this.photonView.Owner, this);
 		}
@@ -98,7 +100,7 @@ public class Airplane : MonoBehaviourPun
 	void Update()
 	{
 		if (!active) return;
-		if (this.photonView.IsMine == false) return;
+		if (this.photonView.IsMine == false) return; // Quit if remote
 
 		if (elevator != null)
 		{
@@ -207,14 +209,15 @@ public class Airplane : MonoBehaviourPun
 		explosion.SetActive(true);
 		smoke.SetActive(true);
 		plane.SetActive(false);
-
+		
 		if (this.photonView.IsMine == false)//only for remote
 		{
-			Debug.Log("Hide Tracker");
 			myTracker.gameObject.SetActive(false);
+			this.photonView.RPC("EndBoost", RpcTarget.Others);
 		}
 		else //Only for Local
 		{
+			EndBoost();
 			UIController.instance.ToggleResetButton(true);
 		}
 	}
@@ -223,12 +226,14 @@ public class Airplane : MonoBehaviourPun
 	public void ResetMe()
 	{
 		active = true;
+		transform.position = GameController.instance.startPosition;
+		transform.rotation = Quaternion.identity;
 		explosion.SetActive(false);
 		smoke.SetActive(false);
 		plane.SetActive(true);
-		transform.position = GameController.instance.startPosition;
-		transform.rotation = Quaternion.identity;
 		rigid.isKinematic = false;
+		leftTrail.Clear();
+		rightTrail.Clear();
 		if (this.photonView.IsMine == false)//only for remote
 		{
 			myTracker.gameObject.SetActive(true);

@@ -14,7 +14,6 @@ public class UIController : MonoBehaviour
 
     public void SetCamera()
     {
-        canvas.worldCamera = Camera.main;
         RegisterTarget(testTarget);
     }
 

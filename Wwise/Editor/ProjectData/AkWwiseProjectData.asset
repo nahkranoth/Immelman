@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e8d2eb023c5724582b321050387e9d, type: 3}
+  m_Name: AkWwiseProjectData
+  m_EditorClassIdentifier: 
+  AcousticTextureWwu:
+  - PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
+    ParentPath: Default Work Unit
+    guid: c19e669f8bb2884992409355c5585e30
+    GuidInternal: 
+    m_lastTime: -8586099598718704487
+    List: []
+  AuxBusWwu:
+  - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
+    ParentPath: Default Work Unit
+    guid: 8d40be7b497f694abbc995533927772c
+    GuidInternal: 
+    m_lastTime: -8586099598719694814
+    List:
+    - name: Master Audio Bus
+      guid: d8a41415a61d2a41a17e75ca0c2149f3
+      id: 3803692087
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+      Path: Default Work Unit\Master Audio Bus
+  BankWwu:
+  - PhysicalPath: SoundBanks\Default Work Unit.wwu
+    ParentPath: Default Work Unit
+    guid: 1251b9bd80fbfe418093bf5d38cd3f53
+    GuidInternal: 
+    m_lastTime: -8586099542449219352
+    List:
+    - name: FastManeuversUnity
+      guid: 2d907b95c82bf74f9436aae40bba4a42
+      id: 4263034120
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: FastManeuversUnity
+        ObjectType: 7
+      Path: Default Work Unit\FastManeuversUnity
+  EventWwu:
+  - PhysicalPath: Events\Default Work Unit.wwu
+    ParentPath: Default Work Unit
+    guid: b33380938eac2c47b0ccd2346d8b79f4
+    GuidInternal: 
+    m_lastTime: -8586099537928610781
+    List:
+    - name: FireGun
+      guid: be1334b821f47b43a1dd47d1774f26f3
+      id: 190400813
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: FireGun
+        ObjectType: 3
+      Path: Default Work Unit\FireGun
+      maxAttenuation: 100000000
+      maxDuration: 260363
+      minDuration: 260363
+  RtpcWwu:
+  - PhysicalPath: Game Parameters\Default Work Unit.wwu
+    ParentPath: Default Work Unit
+    guid: 65dd16789468c244b8d7c2506fec1ce8
+    GuidInternal: 
+    m_lastTime: -8586099598718254357
+    List: []
+  StateWwu:
+  - PhysicalPath: States\Default Work Unit.wwu
+    ParentPath: Default Work Unit
+    guid: fe0ab1a9fb319d4c91c7715ccbcbba16
+    GuidInternal: 
+    m_lastTime: -8586099598719434732
+    List: []
+  SwitchWwu:
+  - PhysicalPath: Switches\Default Work Unit.wwu
+    ParentPath: Default Work Unit
+    guid: 40c4b638cd461d4c8288348db129f3ee
+    GuidInternal: 
+    m_lastTime: -8586099598719594764
+    List: []
+  TriggerWwu:
+  - PhysicalPath: Triggers\Default Work Unit.wwu
+    ParentPath: Default Work Unit
+    guid: 646d0bc744a5734da30cd93282cbcf80
+    GuidInternal: 
+    m_lastTime: -8586099598718174331
+    List: []
+  ExpandedItems:
+  - /FastManeuvers_WwiseProject
+  - /FastManeuvers_WwiseProject/Events
+  - /FastManeuvers_WwiseProject/Events/Default Work Unit
+  autoPopulateEnabled: 1
+  CurrentPluginConfig: 
