@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletController : MonoBehaviour, IDamageHit
 {
     public Rigidbody rigidBody;
+    public AK.Wwise.Event stopEvent;
     public float liveTime = 2f;
     public float hitDamage = 1f;
     public float bulletSpeed = 200f;
@@ -27,6 +28,7 @@ public class BulletController : MonoBehaviour, IDamageHit
         timeDelta += Time.deltaTime;
         if (timeDelta > liveTime)
         {
+            stopEvent.Post(gameObject);
             Destroy(gameObject);
         }
     }

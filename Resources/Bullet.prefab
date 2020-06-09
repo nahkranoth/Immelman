@@ -87,6 +87,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 8885407689778600187}
+  stopEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 193ab2555b86a1c4b96085dfed68eff7,
+      type: 2}
   liveTime: 3
   hitDamage: 1
   bulletSpeed: 400

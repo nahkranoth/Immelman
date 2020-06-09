@@ -8,7 +8,6 @@ public class CameraController : MonoBehaviour
     public Vector3 offset = Vector3.zero;
     public void Follow(Transform _gimbal, Transform _target)
     {
-        Debug.Log("HOLLOW BOLLOW FOLLOW !!!");
         target = _target;
         gimbal = _gimbal;
     }
