@@ -102,5 +102,7 @@ MonoBehaviour:
   - /FastManeuvers_WwiseProject
   - /FastManeuvers_WwiseProject/Events
   - /FastManeuvers_WwiseProject/Events/Default Work Unit
+  - /FastManeuvers_WwiseProject/SoundBanks
+  - /FastManeuvers_WwiseProject/SoundBanks/Default Work Unit
   autoPopulateEnabled: 1
   CurrentPluginConfig: 
