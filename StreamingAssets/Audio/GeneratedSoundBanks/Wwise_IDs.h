@@ -13,8 +13,11 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID STARTBULLETSOUND = 3865871792U;
-        static const AkUniqueID STOPBULLETSOUND = 1963207618U;
+        static const AkUniqueID STARTBULLET = 24512755U;
+        static const AkUniqueID STARTENGINEBOOST = 554144522U;
+        static const AkUniqueID STARTENGINERUNNING = 407001838U;
+        static const AkUniqueID STOPBULLET = 1901122853U;
+        static const AkUniqueID STOPENGINEBOOST = 251395536U;
     } // namespace EVENTS
 
     namespace BANKS

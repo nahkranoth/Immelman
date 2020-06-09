@@ -40,7 +40,7 @@ MonoBehaviour:
     ParentPath: Default Work Unit
     guid: 1251b9bd80fbfe418093bf5d38cd3f53
     GuidInternal: 
-    m_lastTime: -8586099542449219352
+    m_lastTime: -8586098839661341591
     List:
     - name: FastManeuversUnity
       guid: 2d907b95c82bf74f9436aae40bba4a42
@@ -56,20 +56,68 @@ MonoBehaviour:
     ParentPath: Default Work Unit
     guid: b33380938eac2c47b0ccd2346d8b79f4
     GuidInternal: 
-    m_lastTime: -8586099537928610781
+    m_lastTime: -8586098827764594983
     List:
-    - name: FireGun
+    - name: StartBullet
       guid: be1334b821f47b43a1dd47d1774f26f3
-      id: 190400813
+      id: 24512755
       PathAndIcons:
       - ElementName: Default Work Unit
         ObjectType: 12
-      - ElementName: FireGun
+      - ElementName: StartBullet
         ObjectType: 3
-      Path: Default Work Unit\FireGun
-      maxAttenuation: 100000000
-      maxDuration: 260363
-      minDuration: 260363
+      Path: Default Work Unit\StartBullet
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StartEngineBoost
+      guid: e514bfed6616ab409ab4a6dd57368219
+      id: 554144522
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: StartEngineBoost
+        ObjectType: 3
+      Path: Default Work Unit\StartEngineBoost
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StartEngineRunning
+      guid: 71ac5224d39037478c5ecfaf98c371b7
+      id: 407001838
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: StartEngineRunning
+        ObjectType: 3
+      Path: Default Work Unit\StartEngineRunning
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopBullet
+      guid: c525495419e2f94eb748eef433420d34
+      id: 1901122853
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: StopBullet
+        ObjectType: 3
+      Path: Default Work Unit\StopBullet
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopEngineBoost
+      guid: 3181b44cfb7c90429d6c68d798b1bcdb
+      id: 251395536
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: StopEngineBoost
+        ObjectType: 3
+      Path: Default Work Unit\StopEngineBoost
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     ParentPath: Default Work Unit
@@ -100,9 +148,5 @@ MonoBehaviour:
     List: []
   ExpandedItems:
   - /FastManeuvers_WwiseProject
-  - /FastManeuvers_WwiseProject/Events
-  - /FastManeuvers_WwiseProject/Events/Default Work Unit
-  - /FastManeuvers_WwiseProject/SoundBanks
-  - /FastManeuvers_WwiseProject/SoundBanks/Default Work Unit
   autoPopulateEnabled: 1
   CurrentPluginConfig: 

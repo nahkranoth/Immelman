@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96fdd462ff0d3324985f2debf56ada55, type: 3}
   m_Name: B83413BE-F421-437B-A1DD-47D1774F26F3
   m_EditorClassIdentifier: 
-  objectName: FireGun
-  id: 190400813
+  objectName: StartBullet
+  id: 24512755
   guid: B83413BE-F421-437B-A1DD-47D1774F26F3

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 539872787}
   - component: {fileID: 1800493041}
   m_Layer: 0
-  m_Name: Clouds
+  m_Name: clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,8 +49,7 @@ MonoBehaviour:
   distance: 900
   amount: 112
   cloudScale: 3280
-  active: 1
-  timeScale: 0.01
+  timeScale: 0.02
   noise: {fileID: 1800493041}
 --- !u!114 &1800493041
 MonoBehaviour:

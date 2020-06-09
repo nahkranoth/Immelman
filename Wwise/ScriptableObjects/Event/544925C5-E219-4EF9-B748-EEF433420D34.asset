@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96fdd462ff0d3324985f2debf56ada55, type: 3}
   m_Name: 544925C5-E219-4EF9-B748-EEF433420D34
   m_EditorClassIdentifier: 
-  objectName: StopBulletSound
-  id: 1963207618
+  objectName: StopBullet
+  id: 1901122853
   guid: 544925C5-E219-4EF9-B748-EEF433420D34
