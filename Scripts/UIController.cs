@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +10,13 @@ public class UIController : MonoBehaviour
     public Dictionary<Target, RectTransform> trackerTargets = new Dictionary<Target, RectTransform>();
     public GameObject trackerPrefab;
     public Target testTarget;
+
+    public GameObject incorrectVersionScreen;
+
+    public void ShowIncorrectVersionScreen()
+    {
+        incorrectVersionScreen.SetActive(true);
+    }
 
     public void SetCamera()
     {
@@ -49,11 +55,6 @@ public class UIController : MonoBehaviour
     public void ToggleResetButton(Boolean force)
     {
         resetButton.SetActive(force);
-    }
-    
-    public void ToggleResetButton()
-    {
-        resetButton.SetActive(!resetButton.activeSelf);
     }
 
     public void OnResetPressed()

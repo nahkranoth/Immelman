@@ -17,7 +17,6 @@ public class Airplane : MonoBehaviourPun
 	public Rigidbody rigid;
 	public Transform turret;
 
-	public Rigidbody Rigidbody { get; internal set; }
 	public GameObject explosion;
 	public GameObject smoke;
 	public GameObject plane;
@@ -52,14 +51,14 @@ public class Airplane : MonoBehaviourPun
 			GameController.instance.RegisterOtherPlayerAirplane(this.photonView.Owner, this);
 		}
 		wingController.ActivateWings();
+		CursorController.instance.RequestHide();
 		active = true;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (!active) return;
-		if (this.photonView.IsMine == false) return; // Quit if remote
+		if (!active || this.photonView.IsMine == false) return; // Quit if remote
 		if (engine != null)
 		{
 			// Fire 1 to speed up, Fire 2 to slow down. Make sure throttle only goes 0-1.
@@ -82,6 +81,22 @@ public class Airplane : MonoBehaviourPun
 				NetworkManager.instance.SendFireBullet(turret.position, transform.rotation, rigid.velocity);
 				currentFireDeltaMs = 0f;
 			};
+		}
+		if (Input.GetKeyDown(KeyCode.LeftAlt))
+		{
+			GameController.instance.cameraController.lookAt = false;
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.lockState = CursorLockMode.Confined;
+		}
+
+		if (Input.GetKey(KeyCode.LeftAlt))
+		{
+			Camera.main.transform.rotation = Quaternion.Euler(new Vector3(Input.mousePosition.y * 0.3f, Input.mousePosition.x * 0.3f, 0f));
+		}
+
+		if (Input.GetKeyUp(KeyCode.LeftAlt))
+		{
+			GameController.instance.cameraController.lookAt = true;
 		}
 
 		if (Input.GetMouseButtonDown(1))
@@ -110,11 +125,6 @@ public class Airplane : MonoBehaviourPun
 		engine.EndBoost();
 	}
 
-	public void FixedUpdate()
-	{
-		rigid.AddRelativeTorque(new Vector3(trim * 1000f, 0f, 0f));//TODO REMOVE and replace with a better trim system
-	}
-
 	private void OnGUI()
 	{
 		if (this.photonView.IsMine == false) return;
@@ -128,13 +138,11 @@ public class Airplane : MonoBehaviourPun
 	{
 		health -= damage;
 		smoke.SetActive(true);
-
 		if(health <= 0)
 		{
 			KillMe();
 			this.photonView.RPC("KillMe", RpcTarget.Others);
 		}
-
 	}
 
 	[PunRPC]
@@ -154,6 +162,7 @@ public class Airplane : MonoBehaviourPun
 		else //Only for Local
 		{
 			EndBoost();
+			CursorController.instance.RequestShow();
 			UIController.instance.ToggleResetButton(true);
 		}
 	}
@@ -170,6 +179,7 @@ public class Airplane : MonoBehaviourPun
 		rigid.isKinematic = false;
 		leftTrail.Clear();
 		rightTrail.Clear();
+		CursorController.instance.RequestHide();
 		if (this.photonView.IsMine == false)//only for remote
 		{
 			myTracker.gameObject.SetActive(true);

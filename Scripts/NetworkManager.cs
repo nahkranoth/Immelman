@@ -1,21 +1,49 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using UnityEngine;
 
+
+public class GlobalSettings
+{
+    public string version;
+    public string windows_url;
+    public string osx_url;
+}
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager instance;
     public GameObject plane;
+    public GlobalSettings globalSettings;
+    private string versionurl = "http://joeyvanderkaaij.com/sharing/Immelman/version.json";
 
     private void Awake()
     {
         instance = this;
     }
 
-    private void Start()
+    public void DownloadLatestVersion()
+    {
+        var url = Application.platform == RuntimePlatform.OSXPlayer ? globalSettings.osx_url : globalSettings.windows_url;
+        Application.OpenURL(url);
+    }
+
+    IEnumerator Start()
     {
         PhotonNetwork.ConnectUsingSettings();
+
+        using (WWW www = new WWW(versionurl))//TODO What if it fails?
+        {
+            yield return www;
+            string content = www.text;
+            globalSettings = JsonUtility.FromJson<GlobalSettings>(content);
+            if(globalSettings.version != Application.version)
+            {
+                UIController.instance.ShowIncorrectVersionScreen();
+                CursorController.instance.ForceShow();
+            }
+        }
     }
 
     [PunRPC]

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AirplaneWingController : MonoBehaviour
 {
@@ -16,6 +13,9 @@ public class AirplaneWingController : MonoBehaviour
     public SimpleWing elevatorWing;
     public SimpleWing aileronLeftWing;
     public SimpleWing aileronRighttWing;
+
+    public Engine engine;
+    public Rigidbody rigid;
 
     public bool active;
 
@@ -56,12 +56,18 @@ public class AirplaneWingController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!active) return;
         elevator.targetDeflection = -Input.GetAxis("Vertical");
         aileronLeft.targetDeflection = -Input.GetAxis("Horizontal");
         aileronRight.targetDeflection = Input.GetAxis("Horizontal");
         rudder.targetDeflection = Input.GetAxis("Yaw");
+
+        var negativeThrottle = 1f - engine.throttle;
+
+        var turn = new Vector3(Input.GetAxis("Vertical"), 0f, -Input.GetAxis("Horizontal")) * negativeThrottle * 200000f;
+        rigid.AddRelativeTorque(turn, ForceMode.Force);
+
     }
 }

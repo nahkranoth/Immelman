@@ -27,7 +27,6 @@ public class Cloud
         this.rot = rot;
     }
 }
-[ExecuteInEditMode]
 public class CloudField : MonoBehaviour
 {
     public Mesh cloudMesh;
@@ -35,17 +34,28 @@ public class CloudField : MonoBehaviour
     public float distance;
     public float amount;
     public float cloudScale;
-    public bool active;
     public float timeScale;
     private List<Cloud> clouds;
     private List<List<Cloud>> cloudBatches;
 
     public NoiseGenerator noise;
 
+    private float cloudTick = .02f;
+    private float deltaTime = 0f;
+    private int batches;
 
-private void Update()
+    private void Awake()
     {
-        int batches = Mathf.CeilToInt(amount / 31f);
+        batches = Mathf.CeilToInt(amount / 31f);
+    }
+    private void Start()
+    {
+        cloudBatches = new List<List<Cloud>>();
+        RemakeCloudBatch();
+    }
+
+    private void RemakeCloudBatch()
+    {
         cloudBatches = new List<List<Cloud>>();
         for (var b = 0; b < batches; b++) {
             clouds = new List<Cloud>();
@@ -53,20 +63,34 @@ private void Update()
             {
                 for(var j = 0; j < 31; j++)
                 {
-                    var pos = new Vector3( transform.position.x + ( i * distance), transform.position.y, transform.position.z + ( j * distance) );
-                    var tempCloudScale = cloudScale * Mathf.Max(0f, noise.Noise(i/amount, j / amount, Time.time * timeScale)); //TODO: to keep it fair Time.time should be server time
-                    if (tempCloudScale == 0f) continue;
+                    var tempCloudScale = cloudScale * Mathf.Max(0f, noise.Noise(i / amount, j / amount, Time.time * timeScale)); //TODO: to keep it fair Time.time should be server time
+                    if (tempCloudScale <= 0.1f) continue;
                     var size = new Vector3(tempCloudScale, tempCloudScale, tempCloudScale);
+                    var pos = new Vector3( transform.position.x + ( i * distance), transform.position.y, transform.position.z + ( j * distance) );
                     clouds.Add(new Cloud(pos, size, Quaternion.identity));
                 }
             }
             cloudBatches.Add(clouds);
         }
-        for(var cb = 0; cb < cloudBatches.Count; cb++)
+    }
+
+    private void DrawClouds()
+    {
+        for (var cb = 0; cb < cloudBatches.Count; cb++)
         {
             var currClouds = cloudBatches[cb];
             Graphics.DrawMeshInstanced(cloudMesh, 0, cloudMat, currClouds.Select((a) => a.matrix).ToList());
         }
-        active = true;
+    }
+
+    private void Update()
+    {
+        deltaTime += Time.deltaTime;
+        if (deltaTime > cloudTick)
+        {
+            RemakeCloudBatch();
+            deltaTime = 0f;
+        }
+        DrawClouds();
     }
 }

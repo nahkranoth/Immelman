@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     private Transform target;
     private Transform gimbal;
+    public bool lookAt = true;
     public Vector3 offset = Vector3.zero;
     public void Follow(Transform _gimbal, Transform _target)
     {
@@ -16,8 +17,11 @@ public class CameraController : MonoBehaviour
     void FixedUpdate()
     {
         if (!target) return;
-        transform.LookAt(target);
-        transform.rotation = target.rotation;
+        if (lookAt)
+        {
+            transform.LookAt(target);
+            transform.rotation = target.rotation;
+        }
         transform.position = gimbal.position + offset;
     }
 }

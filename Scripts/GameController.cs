@@ -14,6 +14,7 @@ public class GameController : MonoBehaviourPun
     public CameraController cameraController;
     public Dictionary<Player, Airplane> otherPlayersToAirplanes = new Dictionary<Player, Airplane>();
     public Vector3 startPosition = new Vector3(0f, 3000f, 0f);
+    public bool paused;
 
     private void Awake()
     {
