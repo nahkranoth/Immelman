@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -8603237011859348017}
   - component: {fileID: 1850828537}
   - component: {fileID: 1850828538}
+  - component: {fileID: 9109749010725955679}
   - component: {fileID: 5241893787754531576}
   m_Layer: 0
   m_Name: FighterJet
@@ -123,17 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844187b183c1d094d8916beb5d45cb65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elevator: {fileID: 1534183662708735429}
-  aileronLeft: {fileID: 5418095030308029690}
-  aileronRight: {fileID: 3250553714334224909}
-  rudder: {fileID: 3683726032282572701}
-  wing: {fileID: 7009896341569216830}
-  bodyHor: {fileID: 7713033514643301871}
-  bodyVert: {fileID: 8529638185046377917}
-  rudderWing: {fileID: 2423508847733103254}
-  elevatorWing: {fileID: 2980092470631486339}
-  aileronLeftWing: {fileID: 580487664883250223}
-  aileronRighttWing: {fileID: 1916296072370065266}
+  wingController: {fileID: 9109749010725955679}
   engine: {fileID: 1850828537}
   health: 2
   rigid: {fileID: 54389539974053924}
@@ -148,6 +139,30 @@ MonoBehaviour:
   rightTrail: {fileID: 7593753181666772577}
   boostSpeed: 220000
   trim: 40
+--- !u!114 &9109749010725955679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281116439405552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b59c5bea9514740891558ffed8bb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elevator: {fileID: 1534183662708735429}
+  aileronLeft: {fileID: 5418095030308029690}
+  aileronRight: {fileID: 3250553714334224909}
+  rudder: {fileID: 3683726032282572701}
+  wing: {fileID: 7009896341569216830}
+  bodyHor: {fileID: 7713033514643301871}
+  bodyVert: {fileID: 8529638185046377917}
+  rudderWing: {fileID: 2423508847733103254}
+  elevatorWing: {fileID: 2980092470631486339}
+  aileronLeftWing: {fileID: 580487664883250223}
+  aileronRighttWing: {fileID: 1916296072370065266}
+  active: 1
 --- !u!114 &5241893787754531576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,7 +408,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073058001507777901}
   m_LocalRotation: {x: 0.008726558, y: 0, z: 0, w: 0.999962}
-  m_LocalPosition: {x: -0, y: 0.22, z: -6.3}
+  m_LocalPosition: {x: 0, y: 0.22, z: -6.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9199798567243239976}
