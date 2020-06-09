@@ -46,19 +46,23 @@ public class Airplane : MonoBehaviourPun
 		if (this.photonView.IsMine == false)//only for remote
 		{
 			engine.active = false;
-			Camera.main.gameObject.SetActive(false);
 			myTracker = UIController.instance.RegisterTarget(myTarget);//TODO Remove use below
 			GameController.instance.RegisterOtherPlayerAirplane(this.photonView.Owner, this);
 		}
-		wingController.ActivateWings();
-		CursorController.instance.RequestHide();
-		active = true;
+		else
+		{
+			wingController.ActivateWings();
+			CursorController.instance.RequestHide();
+			active = true;
+		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (!active || this.photonView.IsMine == false) return; // Quit if remote
+		if (!active) return; 
+		if (this.photonView.IsMine == false) return; // Quit if remote
+
 		if (engine != null)
 		{
 			// Fire 1 to speed up, Fire 2 to slow down. Make sure throttle only goes 0-1.
@@ -85,13 +89,11 @@ public class Airplane : MonoBehaviourPun
 		if (Input.GetKeyDown(KeyCode.LeftAlt))
 		{
 			GameController.instance.cameraController.lookAt = false;
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.lockState = CursorLockMode.Confined;
 		}
 
 		if (Input.GetKey(KeyCode.LeftAlt))
 		{
-			Camera.main.transform.rotation = Quaternion.Euler(new Vector3(Input.mousePosition.y * 0.3f, Input.mousePosition.x * 0.3f, 0f));
+			GameController.instance.cameraController.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y") * 0.8f, Input.GetAxis("Mouse X") * 0.8f, transform.rotation.z));
 		}
 
 		if (Input.GetKeyUp(KeyCode.LeftAlt))

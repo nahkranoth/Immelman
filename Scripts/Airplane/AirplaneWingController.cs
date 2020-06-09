@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
-public class AirplaneWingController : MonoBehaviour
+public class AirplaneWingController : MonoBehaviourPun
 {
     public ControlSurface elevator;
     public ControlSurface aileronLeft;
@@ -68,6 +69,5 @@ public class AirplaneWingController : MonoBehaviour
 
         var turn = new Vector3(Input.GetAxis("Vertical"), 0f, -Input.GetAxis("Horizontal")) * negativeThrottle * 200000f;
         rigid.AddRelativeTorque(turn, ForceMode.Force);
-
     }
 }

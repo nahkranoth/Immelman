@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -10,6 +8,7 @@ public class CameraController : MonoBehaviour
     public Vector3 offset = Vector3.zero;
     public void Follow(Transform _gimbal, Transform _target)
     {
+        Debug.Log("HOLLOW BOLLOW FOLLOW !!!");
         target = _target;
         gimbal = _gimbal;
     }
@@ -17,11 +16,7 @@ public class CameraController : MonoBehaviour
     void FixedUpdate()
     {
         if (!target) return;
-        if (lookAt)
-        {
-            transform.LookAt(target);
-            transform.rotation = target.rotation;
-        }
+        if (lookAt) transform.rotation = target.rotation;
         transform.position = gimbal.position + offset;
     }
 }
