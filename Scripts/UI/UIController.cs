@@ -12,10 +12,20 @@ public class UIController : MonoBehaviour
     public Target testTarget;
 
     public GameObject incorrectVersionScreen;
+    public ScoreboardScreen scoreBoardScreen;
 
     public void ShowIncorrectVersionScreen()
     {
         incorrectVersionScreen.SetActive(true);
+    }
+    public void ShowScoreboardScreen()
+    {
+        scoreBoardScreen.ShowList();
+        scoreBoardScreen.gameObject.SetActive(true);
+    }
+    public void HideScoreboardScreen()
+    {
+        scoreBoardScreen.gameObject.SetActive(false);
     }
 
     public void SetCamera()

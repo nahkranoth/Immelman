@@ -4,8 +4,8 @@
 //
 
 using UnityEngine;
-using System;
 using Photon.Pun;
+using ExitGames.Client.Photon;
 
 public class Airplane : MonoBehaviourPun
 {
@@ -30,7 +30,6 @@ public class Airplane : MonoBehaviourPun
 	public float boostSpeed = 220000f;
 	public float trim;
 
-	private float throttle = 1.0f;
 	private float fireDeltaMs = 0.2f;
 	private float currentFireDeltaMs = 0;
 	private bool active;
@@ -45,7 +44,7 @@ public class Airplane : MonoBehaviourPun
 	{
 		if (this.photonView.IsMine == false)//remote
 		{
-			engine.active = false;
+			engine.activePlayer = false;
 			myTracker = UIController.instance.RegisterTarget(myTarget);//TODO Remove use below
 			GameController.instance.RegisterOtherPlayerAirplane(this.photonView.Owner, this);
 		}
@@ -54,6 +53,10 @@ public class Airplane : MonoBehaviourPun
 			wingController.ActivateWings();
 			CursorController.instance.RequestHide();
 			active = true;
+			//TODO DOESNT WORK
+			Hashtable hashTable = new Hashtable();
+			hashTable["deaths"] =  "12";
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
 		}
 	}
 
@@ -65,10 +68,10 @@ public class Airplane : MonoBehaviourPun
 
 		if (engine != null)
 		{
-			throttle += (Input.GetKey(KeyCode.LeftShift) ? 1f : 0f) * Time.deltaTime;
-			throttle -= (Input.GetKey(KeyCode.LeftControl) ? 1f : 0f) * Time.deltaTime;
-			throttle = Mathf.Clamp01(throttle);
-			engine.throttle = throttle;
+			var engineThrottle = engine.throttle;
+			engineThrottle += (Input.GetKey(KeyCode.LeftShift) ? 1f : 0f) * Time.deltaTime;
+			engineThrottle -= (Input.GetKey(KeyCode.LeftControl) ? 1f : 0f) * Time.deltaTime;
+			engine.SetThrottle(engineThrottle);
 		}
 		if (Input.GetMouseButtonDown(0))
 		{
@@ -92,12 +95,22 @@ public class Airplane : MonoBehaviourPun
 
 		if (Input.GetKey(KeyCode.LeftAlt))
 		{
-			GameController.instance.cameraController.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y") * 0.8f, Input.GetAxis("Mouse X") * 0.8f, transform.rotation.z));
+			GameController.instance.cameraController.transform.Rotate(new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), transform.rotation.z));
 		}
 
 		if (Input.GetKeyUp(KeyCode.LeftAlt))
 		{
 			GameController.instance.cameraController.lookAt = true;
+		}
+
+		if (Input.GetKeyDown(KeyCode.Tab))
+		{
+			UIController.instance.ShowScoreboardScreen();
+		}
+
+		if (Input.GetKeyUp(KeyCode.Tab))
+		{
+			UIController.instance.HideScoreboardScreen();
 		}
 
 		if (Input.GetMouseButtonDown(1))
@@ -131,7 +144,7 @@ public class Airplane : MonoBehaviourPun
 		if (this.photonView.IsMine == false) return;
 		const float msToKnots = 1.94384f;
 		GUI.Label(new Rect(10, 40, 300, 20), string.Format("Speed: {0:0.0} knots", rigid.velocity.magnitude * msToKnots));
-		GUI.Label(new Rect(10, 60, 300, 20), string.Format("Throttle: {0:0.0}%", throttle * 100.0f));
+		GUI.Label(new Rect(10, 60, 300, 20), string.Format("Throttle: {0:0.0}%", engine.throttle * 100.0f));
 	}
 
 	[PunRPC]
@@ -159,6 +172,12 @@ public class Airplane : MonoBehaviourPun
 		{
 			myTracker.gameObject.SetActive(false);
 			this.photonView.RPC("EndBoost", RpcTarget.Others);
+
+			var cp = PhotonNetwork.LocalPlayer.CustomProperties;
+			var hashTable = new Hashtable();
+			int deaths = (int)cp["deaths"];
+			hashTable.Add("deaths", deaths + 1);
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
 		}
 		else //local
 		{
@@ -188,7 +207,6 @@ public class Airplane : MonoBehaviourPun
 		}
 		else //local
 		{
-			engine.throttle = 100f;
 			UIController.instance.ToggleResetButton(false);
 		}
 	}
@@ -205,8 +223,7 @@ public class Airplane : MonoBehaviourPun
 
 		if (collision.gameObject.tag == "Kill")
 		{//TODO check velocity and if it's wheels that are touching the floor
-			KillMe();
-			this.photonView.RPC("KillMe", RpcTarget.Others);
+			this.photonView.RPC("KillMe", RpcTarget.All);
 		}
 		if (collision.gameObject.tag == "Damage")
 		{

@@ -101,6 +101,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
+        PhotonNetwork.LocalPlayer.NickName = "test";
         CreateRoom("testroom");
         Debug.Log("connected");
     }
