@@ -51,7 +51,6 @@ public class Engine : MonoBehaviour
 
 	public void Boost()
 	{
-
 		thrust = boostSpeed;
 		startEngineBoost.Post(gameObject);
 	}
@@ -59,6 +58,11 @@ public class Engine : MonoBehaviour
 	public void EndBoost()
 	{
 		thrust = normalSpeed;
+		if(throttle == 0)
+		{
+			stopEngineRunning.Post(gameObject);
+			return;
+		}
 		startEngineRunning.Post(gameObject);
 	}
 

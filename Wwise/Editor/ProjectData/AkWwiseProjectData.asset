@@ -40,7 +40,7 @@ MonoBehaviour:
     ParentPath: Default Work Unit
     guid: 1251b9bd80fbfe418093bf5d38cd3f53
     GuidInternal: 
-    m_lastTime: -8586097890833665497
+    m_lastTime: -8586097863267762893
     List:
     - name: FastManeuversUnity
       guid: 2d907b95c82bf74f9436aae40bba4a42
@@ -56,7 +56,7 @@ MonoBehaviour:
     ParentPath: Default Work Unit
     guid: b33380938eac2c47b0ccd2346d8b79f4
     GuidInternal: 
-    m_lastTime: -8586097890833545490
+    m_lastTime: -8586097863267512887
     List:
     - name: StartBullet
       guid: be1334b821f47b43a1dd47d1774f26f3
@@ -79,7 +79,7 @@ MonoBehaviour:
       - ElementName: StartEngineBoost
         ObjectType: 3
       Path: Default Work Unit\StartEngineBoost
-      maxAttenuation: 100000000
+      maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
     - name: StartEngineRunning
@@ -91,7 +91,7 @@ MonoBehaviour:
       - ElementName: StartEngineRunning
         ObjectType: 3
       Path: Default Work Unit\StartEngineRunning
-      maxAttenuation: 100000000
+      maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
     - name: StartEngineStart
@@ -118,6 +118,18 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
+    - name: StopEngineRunning
+      guid: d14999b200d3d441b0978ad9de400efe
+      id: 3145559408
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: StopEngineRunning
+        ObjectType: 3
+      Path: Default Work Unit\StopEngineRunning
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     ParentPath: Default Work Unit
