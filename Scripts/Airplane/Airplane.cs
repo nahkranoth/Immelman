@@ -66,13 +66,14 @@ public class Airplane : MonoBehaviourPun
 		if (!active) return; 
 		if (this.photonView.IsMine == false) return; // Quit if remote
 
-		if (engine != null)
+		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl))
 		{
 			var engineThrottle = engine.throttle;
 			engineThrottle += (Input.GetKey(KeyCode.LeftShift) ? 1f : 0f) * Time.deltaTime;
 			engineThrottle -= (Input.GetKey(KeyCode.LeftControl) ? 1f : 0f) * Time.deltaTime;
 			engine.SetThrottle(engineThrottle);
 		}
+
 		if (Input.GetMouseButtonDown(0))
 		{
 			currentFireDeltaMs = fireDeltaMs;
@@ -207,6 +208,7 @@ public class Airplane : MonoBehaviourPun
 		}
 		else //local
 		{
+			engine.SetThrottle(0f);
 			UIController.instance.ToggleResetButton(false);
 		}
 	}

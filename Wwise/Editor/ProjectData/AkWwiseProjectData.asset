@@ -40,7 +40,7 @@ MonoBehaviour:
     ParentPath: Default Work Unit
     guid: 1251b9bd80fbfe418093bf5d38cd3f53
     GuidInternal: 
-    m_lastTime: -8586097902441089465
+    m_lastTime: -8586097890833665497
     List:
     - name: FastManeuversUnity
       guid: 2d907b95c82bf74f9436aae40bba4a42
@@ -56,20 +56,8 @@ MonoBehaviour:
     ParentPath: Default Work Unit
     guid: b33380938eac2c47b0ccd2346d8b79f4
     GuidInternal: 
-    m_lastTime: -8586097900445287437
+    m_lastTime: -8586097890833545490
     List:
-    - name: GeneralStop
-      guid: 93e350ecc2a0b344b1ac7e86c750caaf
-      id: 47999735
-      PathAndIcons:
-      - ElementName: Default Work Unit
-        ObjectType: 12
-      - ElementName: GeneralStop
-        ObjectType: 3
-      Path: Default Work Unit\GeneralStop
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
     - name: StartBullet
       guid: be1334b821f47b43a1dd47d1774f26f3
       id: 24512755

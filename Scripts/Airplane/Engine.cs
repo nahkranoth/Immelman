@@ -9,7 +9,7 @@ using UnityEngine;
 public class Engine : MonoBehaviour
 {
 	[Range(0, 1)]
-	public float throttle = 1.0f;
+	public float throttle;
 
 	[Tooltip("How much power the engine puts out.")]
 	public float thrust;
@@ -26,6 +26,7 @@ public class Engine : MonoBehaviour
 	public AK.Wwise.Event startEngineStart;
 	public AK.Wwise.Event startEngineBoost;
 	public AK.Wwise.Event startEngineRunning;
+	public AK.Wwise.Event stopEngineRunning;
 
 	private void Awake()
 	{
@@ -35,9 +36,9 @@ public class Engine : MonoBehaviour
 	public void SetThrottle(float _throttle)
 	{
 		throttle = Mathf.Clamp01(_throttle);
-		if(throttle == 0)
+		if(throttle == 0 && running)
 		{
-			AkSoundEngine.StopAll(gameObject);
+			stopEngineRunning.Post(gameObject);
 			running = false;
 		}
 
