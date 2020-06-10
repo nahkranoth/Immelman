@@ -192,7 +192,7 @@ public class Airplane : MonoBehaviourPun
 	public void ResetMe()
 	{
 		active = true;
-		transform.position = GameController.instance.startPosition;
+		transform.position = GameController.instance.startNode.position;
 		transform.rotation = Quaternion.identity;
 		explosion.SetActive(false);
 		smoke.SetActive(false);
@@ -222,7 +222,6 @@ public class Airplane : MonoBehaviourPun
 	void OnCollisionEnter(Collision collision)
 	{
 		if (this.photonView.IsMine == false) return;
-
 		if (collision.gameObject.tag == "Kill")
 		{//TODO check velocity and if it's wheels that are touching the floor
 			this.photonView.RPC("KillMe", RpcTarget.All);
