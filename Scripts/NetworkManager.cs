@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using System;
 using System.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 
@@ -46,10 +47,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
-    void ChatMessage(string a, string b)
+    public void StartGame(string nickName)
     {
-        Debug.Log(string.Format("ChatMessage {0} {1}", a, b));
+        PhotonNetwork.LocalPlayer.NickName = nickName;
+        CreateRoom("testroom");
     }
 
     [PunRPC]
@@ -64,12 +65,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         photonView.RPC("FireBullet", RpcTarget.Others, position, orientation, baseVelocity);
     }
 
-    public void SendJoinMessage()
-    {
-        PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("ChatMessage", RpcTarget.All, "jup", "and jup.");
-    }
-
     public void CreateRoom(string roomName)
     {
         PhotonNetwork.CreateRoom(roomName);
@@ -79,11 +74,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRoom(roomName);
     }
-
-    /*public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-    {
-        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
-    }*/
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
@@ -101,8 +91,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        PhotonNetwork.LocalPlayer.NickName = "test";
-        CreateRoom("testroom");
+        PhotonNetwork.LocalPlayer.NickName = "Unknown Player";
         Debug.Log("connected");
     }
 
