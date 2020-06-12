@@ -145,7 +145,6 @@ public class Airplane : MonoBehaviourPun
 		if (this.photonView.IsMine == false) return;
 		const float msToKnots = 1.94384f;
 		GUI.Label(new Rect(10, 40, 300, 20), string.Format("Speed: {0:0.0} knots", rigid.velocity.magnitude * msToKnots));
-		GUI.Label(new Rect(10, 60, 300, 20), string.Format("Throttle: {0:0.0}%", engine.throttle * 100.0f));
 	}
 
 	[PunRPC]
