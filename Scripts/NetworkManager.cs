@@ -92,6 +92,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         PhotonNetwork.LocalPlayer.NickName = "Unknown Player";
+        UIController.instance.startScreen.EnableJoinButton();
         Debug.Log("connected");
     }
 

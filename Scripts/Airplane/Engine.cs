@@ -36,7 +36,9 @@ public class Engine : MonoBehaviour
 	public void SetThrottle(float _throttle)
 	{
 		throttle = Mathf.Clamp01(_throttle);
-		if(throttle == 0 && running)
+		UIController.instance.throttleIndicator.pivot = new Vector2(0, throttle);
+
+		if (throttle == 0 && running)
 		{
 			stopEngineRunning.Post(gameObject);
 			running = false;

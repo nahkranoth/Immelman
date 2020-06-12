@@ -10,9 +10,11 @@ public class UIController : MonoBehaviour
     public Dictionary<Target, RectTransform> trackerTargets = new Dictionary<Target, RectTransform>();
     public GameObject trackerPrefab;
     public Target testTarget;
+    public RectTransform throttleIndicator;
 
     public GameObject incorrectVersionScreen;
     public ScoreboardScreen scoreBoardScreen;
+    public StartScreenController startScreen;
 
     public void ShowIncorrectVersionScreen()
     {
