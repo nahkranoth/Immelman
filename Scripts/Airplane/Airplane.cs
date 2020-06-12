@@ -6,6 +6,8 @@
 using UnityEngine;
 using Photon.Pun;
 using ExitGames.Client.Photon;
+using System;
+using Photon.Realtime;
 
 public class Airplane : MonoBehaviourPun
 {
@@ -34,6 +36,7 @@ public class Airplane : MonoBehaviourPun
 	private float currentFireDeltaMs = 0;
 	private bool active;
 	private RectTransform myTracker;
+	private bool alive = false;
 
 	private void Start()
 	{
@@ -52,18 +55,19 @@ public class Airplane : MonoBehaviourPun
 		{
 			wingController.ActivateWings();
 			CursorController.instance.RequestHide();
-			active = true;
-			//TODO DOESNT WORK
 			Hashtable hashTable = new Hashtable();
-			hashTable["deaths"] =  "12";
+			hashTable["deaths"] = 0;
+			hashTable["kills"] = 0;
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
+			active = true;
 		}
+		alive = true;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (!active) return; 
+		if (!active || !alive) return; 
 		if (this.photonView.IsMine == false) return; // Quit if remote
 
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl))
@@ -84,7 +88,7 @@ public class Airplane : MonoBehaviourPun
 			currentFireDeltaMs += Time.deltaTime;
 			if (fireDeltaMs < currentFireDeltaMs)
 			{
-				GameController.instance.FireBulletFrom(turret.position, transform.rotation, rigid.velocity);
+				GameController.instance.FireBulletFrom(turret.position, transform.rotation, rigid.velocity, PhotonNetwork.LocalPlayer);
 				NetworkManager.instance.SendFireBullet(turret.position, transform.rotation, rigid.velocity);
 				currentFireDeltaMs = 0f;
 			};
@@ -148,42 +152,52 @@ public class Airplane : MonoBehaviourPun
 	}
 
 	[PunRPC]
-	public void DamageMe(float damage)
+	public void DamageMe(float damage, string ownerID)
 	{
 		health -= damage;
 		smoke.SetActive(true);
 		if(health <= 0)
 		{
-			KillMe();
-			this.photonView.RPC("KillMe", RpcTarget.Others);
+			if (this.photonView.IsMine)//local
+			{
+				Player bulletOwner = GameController.instance.GetPlayerById(ownerID);
+				if(bulletOwner != PhotonNetwork.LocalPlayer) { //If you kill yourself, you don't deserve a point, you filthy cheater
+					Hashtable hashTable = new Hashtable();
+					int kills = (int)bulletOwner.CustomProperties["kills"];
+					hashTable["kills"] = kills + 1;
+					bulletOwner.SetCustomProperties(hashTable);
+				}
+			}
+			this.photonView.RPC("KillMe", RpcTarget.All);
 		}
 	}
 
 	[PunRPC]
 	public void KillMe()
 	{
+		if (!alive) return;
+		alive = false;
 		rigid.isKinematic = true;
 		active = false;
 		explosion.SetActive(true);
 		smoke.SetActive(true);
 		plane.SetActive(false);
-		
+		this.photonView.RPC("EndBoost", RpcTarget.All);
+
 		if (this.photonView.IsMine == false)//remote
 		{
 			myTracker.gameObject.SetActive(false);
-			this.photonView.RPC("EndBoost", RpcTarget.Others);
-
-			var cp = PhotonNetwork.LocalPlayer.CustomProperties;
-			var hashTable = new Hashtable();
-			int deaths = (int)cp["deaths"];
-			hashTable.Add("deaths", deaths + 1);
-			PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
 		}
 		else //local
 		{
-			EndBoost();
+			engine.SetThrottle(0f);
 			CursorController.instance.RequestShow();
 			UIController.instance.ToggleResetButton(true);
+
+			Hashtable hashTable = new Hashtable();
+			int deaths = (int)PhotonNetwork.LocalPlayer.CustomProperties["deaths"];
+			hashTable["deaths"] = deaths + 1;
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
 		}
 	}
 
@@ -191,6 +205,7 @@ public class Airplane : MonoBehaviourPun
 	public void ResetMe()
 	{
 		active = true;
+		alive = true;
 		transform.position = GameController.instance.startNode.position;
 		transform.rotation = Quaternion.identity;
 		explosion.SetActive(false);
@@ -207,7 +222,6 @@ public class Airplane : MonoBehaviourPun
 		}
 		else //local
 		{
-			engine.SetThrottle(0f);
 			UIController.instance.ToggleResetButton(false);
 		}
 	}
@@ -222,13 +236,13 @@ public class Airplane : MonoBehaviourPun
 	{
 		if (this.photonView.IsMine == false) return;
 		if (collision.gameObject.tag == "Kill")
-		{//TODO check velocity and if it's wheels that are touching the floor
+		{
 			this.photonView.RPC("KillMe", RpcTarget.All);
 		}
 		if (collision.gameObject.tag == "Damage")
 		{
-			DamageMe(collision.gameObject.GetComponent<IDamageHit>().damage);
-			this.photonView.RPC("DamageMe", RpcTarget.Others, 1f);
+			IDamageHit hit = collision.gameObject.GetComponent<IDamageHit>();
+			this.photonView.RPC("DamageMe", RpcTarget.All, hit.damage, hit.owner.UserId);
 		}
 	}
 }

@@ -1,8 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using System;
 using System.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 
@@ -54,20 +52,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void FireBullet(Vector3 position, Quaternion orientation, Vector3 baseVelocity)
+    void FireBullet(Vector3 position, Quaternion orientation, Vector3 baseVelocity, Player owner)
     {
-        GameController.instance.FireBulletFrom(position, orientation, baseVelocity);
+        GameController.instance.FireBulletFrom(position, orientation, baseVelocity, owner);
     }
 
     public void SendFireBullet(Vector3 position, Quaternion orientation, Vector3 baseVelocity)
     {
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("FireBullet", RpcTarget.Others, position, orientation, baseVelocity);
+        photonView.RPC("FireBullet", RpcTarget.Others, position, orientation, baseVelocity, PhotonNetwork.LocalPlayer);
     }
 
     public void CreateRoom(string roomName)
     {
-        PhotonNetwork.CreateRoom(roomName);
+        RoomOptions options = new RoomOptions();
+        options.PublishUserId = true;
+        PhotonNetwork.CreateRoom(roomName, options);
     }
 
     public void JoinRoom(string roomName)
@@ -98,6 +98,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        Debug.Log("Joined Room");
         base.OnJoinedRoom();
         GameController.instance.PlayerAirplaneInit(PhotonNetwork.Instantiate(this.plane.name, GameController.instance.startNode.position, Quaternion.identity, 0).GetComponent<Airplane>());
     }

@@ -11,6 +11,6 @@ public class ScoreboardPlayerPanel : MonoBehaviour
     {
         name.text = _name;
         kills.text = _kills;
-        deaths.text = _kills;
+        deaths.text = _deaths;
     }
 }

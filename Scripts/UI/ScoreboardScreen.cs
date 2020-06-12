@@ -18,8 +18,7 @@ public class ScoreboardScreen : MonoBehaviour
         foreach (Player player in players)
         {
             ScoreboardPlayerPanel panel = GameObject.Instantiate(playerScorePanel, transform).GetComponent<ScoreboardPlayerPanel>();
-            var cp = player.CustomProperties;
-            panel.Initiliaze(player.NickName, "0", (string)cp["deaths"]);
+            panel.Initiliaze(player.NickName, player.CustomProperties["kills"].ToString(), player.CustomProperties["deaths"].ToString());
         }
     }
 }

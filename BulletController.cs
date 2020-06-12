@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,14 +12,19 @@ public class BulletController : MonoBehaviour, IDamageHit
     public float bulletSpeed = 200f;
     public float damage { get { return hitDamage; } }
 
-    private float timeDelta;
+    public Player currentOwner;
+    public Player owner { get { return currentOwner; } set { currentOwner = value; } }
 
-    public void Fire(Vector3 position, Quaternion orientation, Vector3 baseVelocity)
+    private float timeDelta;
+    
+
+    public void Fire(Vector3 position, Quaternion orientation, Vector3 baseVelocity, Player _owner)
     {
         transform.position = position;
         transform.rotation = orientation;
         rigidBody.velocity = baseVelocity;
         rigidBody.AddRelativeForce(Vector3.forward * bulletSpeed, ForceMode.VelocityChange);
+        owner = _owner;
         timeDelta = 0f;
     }
 
