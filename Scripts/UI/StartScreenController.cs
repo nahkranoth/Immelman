@@ -16,6 +16,7 @@ public class StartScreenController : MonoBehaviour
         string birdname = GetBirdName();
         nicknameInput.text = birdname;
         footer.text = string.Format("Version {0}", Application.version);
+        gameObject.SetActive(true);
     }
     public void OnStartGame()
     {
