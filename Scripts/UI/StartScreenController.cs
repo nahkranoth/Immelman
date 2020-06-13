@@ -9,7 +9,7 @@ public class StartScreenController : MonoBehaviour
     public TMP_Text footer;
     public Button startButton;
 
-    private const string birdnamesPath = "Assets/Resources/birdnames.csv";
+    private const string birdnamesFilename = "/birdnames.csv";
 
     public void Start()
     {
@@ -35,12 +35,12 @@ public class StartScreenController : MonoBehaviour
     {
         string result = "";
 
-        var max = TotalLines(birdnamesPath);
+        var max = TotalLines(Application.streamingAssetsPath + birdnamesFilename);
         int randomLine = Random.Range(0, max);
 
         try
         {
-            using (StreamReader inputFile = new StreamReader(birdnamesPath))
+            using (StreamReader inputFile = new StreamReader(Application.streamingAssetsPath + birdnamesFilename))
             {
                 for (int i = 1; i <= randomLine; i++)
                 {
