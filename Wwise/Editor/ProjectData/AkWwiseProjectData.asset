@@ -40,7 +40,7 @@ MonoBehaviour:
     ParentPath: Default Work Unit
     guid: 1251b9bd80fbfe418093bf5d38cd3f53
     GuidInternal: 
-    m_lastTime: -8586097863267762893
+    m_lastTime: -8586095464538985418
     List:
     - name: FastManeuversUnity
       guid: 2d907b95c82bf74f9436aae40bba4a42
@@ -56,8 +56,20 @@ MonoBehaviour:
     ParentPath: Default Work Unit
     guid: b33380938eac2c47b0ccd2346d8b79f4
     GuidInternal: 
-    m_lastTime: -8586097863267512887
+    m_lastTime: -8586095470868909514
     List:
+    - name: SetMusicState
+      guid: d39a808b17c50d44836fc0bd6df1050c
+      id: 1056292371
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: SetMusicState
+        ObjectType: 3
+      Path: Default Work Unit\SetMusicState
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: StartBullet
       guid: be1334b821f47b43a1dd47d1774f26f3
       id: 24512755
@@ -142,8 +154,45 @@ MonoBehaviour:
     ParentPath: Default Work Unit
     guid: fe0ab1a9fb319d4c91c7715ccbcbba16
     GuidInternal: 
-    m_lastTime: -8586099598719434732
-    List: []
+    m_lastTime: -8586095473603573261
+    List:
+    - name: MusicStates
+      guid: f890d5df2475b04f8ab10bf3b0af176d
+      id: 3103015060
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: MusicStates
+        ObjectType: 9
+      Path: Default Work Unit\MusicStates
+      values:
+      - name: Flying
+        guid: 15806ce96b5c9c40a8b67ac74f23d6fe
+        id: 3827174396
+        PathAndIcons:
+        - ElementName: Flying
+          ObjectType: 8
+      - name: FlyingClouds
+        guid: a25eeaba269a724d9c5716486422b6c6
+        id: 4274707406
+        PathAndIcons:
+        - ElementName: FlyingClouds
+          ObjectType: 8
+      - name: Grounded
+        guid: d9285bce72f87241b2fe85917437d1bc
+        id: 2907122923
+        PathAndIcons:
+        - ElementName: Grounded
+          ObjectType: 8
+      - name: None
+        guid: a47ebfe9a7558840a34e015135657a94
+        id: 748895195
+        PathAndIcons:
+        - ElementName: None
+          ObjectType: 8
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
   SwitchWwu:
   - PhysicalPath: Switches\Default Work Unit.wwu
     ParentPath: Default Work Unit
@@ -160,7 +209,8 @@ MonoBehaviour:
     List: []
   ExpandedItems:
   - /FastManeuvers_WwiseProject
-  - /FastManeuvers_WwiseProject/Events
-  - /FastManeuvers_WwiseProject/Events/Default Work Unit
+  - /FastManeuvers_WwiseProject/States
+  - /FastManeuvers_WwiseProject/States/Default Work Unit
+  - /FastManeuvers_WwiseProject/States/Default Work Unit/MusicStates
   autoPopulateEnabled: 1
   CurrentPluginConfig: 

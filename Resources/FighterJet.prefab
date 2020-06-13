@@ -161,6 +161,7 @@ MonoBehaviour:
   rightTrail: {fileID: 7593753181666772577}
   boostSpeed: 220000
   trim: 40
+  altitude: 0
 --- !u!114 &9109749010725955679
 MonoBehaviour:
   m_ObjectHideFlags: 0

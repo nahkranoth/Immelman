@@ -38,6 +38,10 @@ public class Airplane : MonoBehaviourPun
 	private RectTransform myTracker;
 	private bool alive = false;
 
+	private float waterAltitude = 1221f;
+	private float takeOffAltitude = 600f; //relative to water
+	public float altitude;
+
 	private void Start()
 	{
 		SetActive();
@@ -69,6 +73,13 @@ public class Airplane : MonoBehaviourPun
 	{
 		if (!active || !alive) return; 
 		if (this.photonView.IsMine == false) return; // Quit if remote
+
+		altitude = transform.position.y - waterAltitude;
+
+		if(altitude > takeOffAltitude + 10f)
+		{
+			AudioController.instance.TriggerFlyingMusic();
+		};
 
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl))
 		{
@@ -149,6 +160,7 @@ public class Airplane : MonoBehaviourPun
 		if (this.photonView.IsMine == false) return;
 		const float msToKnots = 1.94384f;
 		GUI.Label(new Rect(10, 40, 300, 20), string.Format("Speed: {0:0.0} knots", rigid.velocity.magnitude * msToKnots));
+		GUI.Label(new Rect(10, 40, 300, 20), string.Format("Altitude: {0} m", altitude));
 	}
 
 	[PunRPC]

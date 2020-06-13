@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c8fc07b9becfe43984435fa8ec73d9, type: 3}
+  m_Name: E96C8015-5C6B-409C-A8B6-7AC74F23D6FE
+  m_EditorClassIdentifier: 
+  objectName: Flying
+  id: 3827174396
+  guid: E96C8015-5C6B-409C-A8B6-7AC74F23D6FE
+  WwiseStateGroupReference: {fileID: 11400000, guid: 82fbe55c09e44d84d8fc87dd0b515ca9,
+    type: 2}

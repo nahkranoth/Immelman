@@ -1,0 +1,17 @@
+Event	ID	Name			Wwise Object Path	Notes
+	24512755	StartBullet			\Default Work Unit\StartBullet	
+	407001838	StartEngineRunning			\Default Work Unit\StartEngineRunning	
+	554144522	StartEngineBoost			\Default Work Unit\StartEngineBoost	
+	1442718291	StartEngineStart			\Default Work Unit\StartEngineStart	
+	1901122853	StopBullet			\Default Work Unit\StopBullet	
+	3145559408	StopEngineRunning			\Default Work Unit\StopEngineRunning	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	61877955	gunShot	D:\PROJECTS\2020\Immelman\FastManeuvers_WwiseProject\.cache\Windows\SFX\gunShot_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\gunShot		45992
+	84673309	engineRunning	D:\PROJECTS\2020\Immelman\FastManeuvers_WwiseProject\.cache\Windows\SFX\engineRunning_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Airplane\engineRunning		154936
+	332668264	engineBoosting	D:\PROJECTS\2020\Immelman\FastManeuvers_WwiseProject\.cache\Windows\SFX\engineBoosting_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Airplane\engineBoosting		453064
+	545819524	engineDamaged	D:\PROJECTS\2020\Immelman\FastManeuvers_WwiseProject\.cache\Windows\SFX\engineDamaged_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Airplane\engineDamaged		151512
+	570654695	bullet	D:\PROJECTS\2020\Immelman\FastManeuvers_WwiseProject\.cache\Windows\SFX\bullet_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\bullet		26492
+	613758202	wind	D:\PROJECTS\2020\Immelman\FastManeuvers_WwiseProject\.cache\Windows\SFX\wind_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Airplane\wind		1561204
+	995340772	engineStart	D:\PROJECTS\2020\Immelman\FastManeuvers_WwiseProject\.cache\Windows\SFX\engineStart_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Airplane\engineStart		1122816
+
