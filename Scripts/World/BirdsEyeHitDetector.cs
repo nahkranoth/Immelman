@@ -6,13 +6,13 @@ public class BirdsEyeHitDetector : MonoBehaviour
 {
     public BirdsheadController birdHead;
     public Material standardMaterial;
-    public Material goldMaterial;
+    public Material enabledMaterial;
     public MeshRenderer meshRenderer;
     public bool IsLeftEye;
 
     public void OnCollisionEnter(Collision collision)
     {
         birdHead.HitEye(IsLeftEye);
-        meshRenderer.material = goldMaterial;
+        meshRenderer.material = enabledMaterial;
     }
 }
