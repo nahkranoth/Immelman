@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AirplaneWingController : MonoBehaviourPun
 {
@@ -23,6 +24,30 @@ public class AirplaneWingController : MonoBehaviourPun
     public void Awake()
     {
         DeactivateWings();
+    }
+    // Update is called once per frame
+
+    /*void FixedUpdate()
+    {
+        if (!active) return;
+        var negativeThrottle = 1f - engine.throttle;
+
+        var turn = new Vector3(Input.GetAxis("Vertical"), 0f, -Input.GetAxis("Horizontal")) * negativeThrottle * 200000f;
+        rigid.AddRelativeTorque(turn, ForceMode.Force);
+    }*/
+
+    public void SetPitchRollDeflection(Vector2 axis)
+    {
+        if (!active) return;
+
+        elevator.targetDeflection = -axis.y;
+        aileronLeft.targetDeflection = -axis.x;
+        aileronRight.targetDeflection = axis.x;
+    }
+
+    public void SetYawDeflection(float value)
+    {
+        rudder.targetDeflection = value;
     }
 
     public void DeactivateWings()
@@ -54,20 +79,5 @@ public class AirplaneWingController : MonoBehaviourPun
         aileronRighttWing.active = true;
         aileronLeftWing.active = true;
         active = true;
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (!active) return;
-        elevator.targetDeflection = -Input.GetAxis("Vertical");
-        aileronLeft.targetDeflection = -Input.GetAxis("Horizontal");
-        aileronRight.targetDeflection = Input.GetAxis("Horizontal");
-        rudder.targetDeflection = Input.GetAxis("Yaw");
-
-        var negativeThrottle = 1f - engine.throttle;
-
-        var turn = new Vector3(Input.GetAxis("Vertical"), 0f, -Input.GetAxis("Horizontal")) * negativeThrottle * 200000f;
-        rigid.AddRelativeTorque(turn, ForceMode.Force);
     }
 }

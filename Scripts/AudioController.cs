@@ -13,30 +13,34 @@ public class AudioController : MonoBehaviour
     public string groundedStateName;
 
     private string currentMusicState;
+    public bool muted = true;
 
     private void Awake()
     {
         instance = this;
-        currentMusicState = groundedStateName;
+    }
+    private void Start()
+    {
+        TriggerGroundedMusic();
     }
 
     public void TriggerFlyingMusic()
     {
-        if (currentMusicState == flyingStateName) return;
+        if (currentMusicState == flyingStateName || muted) return;
         AkSoundEngine.SetState(stateGroupName, flyingStateName);
         currentMusicState = flyingStateName;
     }
 
     public void TriggerFlyingCloudsMusic()
     {
-        if (currentMusicState == flyingCloudsStateName) return;
+        if (currentMusicState == flyingCloudsStateName || muted) return;
         AkSoundEngine.SetState(stateGroupName, flyingCloudsStateName);
         currentMusicState = flyingCloudsStateName;
     }
 
     public void TriggerGroundedMusic()
     {
-        if (currentMusicState == groundedStateName) return;
+        if (currentMusicState == groundedStateName || muted) return;
         AkSoundEngine.SetState(stateGroupName, groundedStateName);
         currentMusicState = groundedStateName;
     }

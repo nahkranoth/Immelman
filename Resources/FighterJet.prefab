@@ -14,13 +14,15 @@ GameObject:
   - component: {fileID: -8603237011859348017}
   - component: {fileID: 1850828537}
   - component: {fileID: 1850828538}
+  - component: {fileID: 1871444045710706242}
   - component: {fileID: 9109749010725955679}
   - component: {fileID: 5241893787754531576}
   - component: {fileID: 6149146622177619940}
   - component: {fileID: 1729563373325712594}
+  - component: {fileID: 8896080794646355882}
   m_Layer: 0
   m_Name: FighterJet
-  m_TagString: Untagged
+  m_TagString: Kill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wingController: {fileID: 9109749010725955679}
+  inputController: {fileID: 1871444045710706242}
   engine: {fileID: 1850828537}
   health: 2
   rigid: {fileID: 54389539974053924}
@@ -162,6 +165,22 @@ MonoBehaviour:
   boostSpeed: 220000
   trim: 40
   altitude: 0
+--- !u!114 &1871444045710706242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281116439405552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7da8b1a1650544793fb42c089fff62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  airplane: {fileID: 1850828538}
+  engine: {fileID: 1850828537}
+  airplaneWingController: {fileID: 9109749010725955679}
+  active: 1
 --- !u!114 &9109749010725955679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,8 +273,158 @@ MonoBehaviour:
   m_callbackDataInternal: {fileID: 0}
   MultiPositionType: 1
   multiPositionTypeLabel: 0
-  LargeModePositions: []
+  LargeModePositions:
+  - {fileID: 0}
   multiPositionArray: []
+--- !u!114 &8896080794646355882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281116439405552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: bfd27ae3f059ef64c92a6024c221dd16,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1871444045710706242}
+        m_MethodName: OnMoving
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6b7d3f16-5b04-4fee-b9bb-a6d746678de2
+    m_ActionName: Airplane/Moving[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/q,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1871444045710706242}
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dc36b70b-0525-4c95-9f0f-b99f3a3ef6ed
+    m_ActionName: Airplane/Shoot[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1871444045710706242}
+        m_MethodName: OnBoost
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d6a36107-6c27-489f-b0ea-ead5fbed9c66
+    m_ActionName: Airplane/Boost[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1871444045710706242}
+        m_MethodName: OnFreeLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a2466f7c-a691-4eed-956c-8720b2dba890
+    m_ActionName: Airplane/FreeLook[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a478ccd0-36cd-416f-85be-d0f1de21ea9b
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0055b188-3893-4c2d-9af9-510c3058a468
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b3c68cf1-a6ef-42e9-9b79-1ac4efb5eda4
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: abaa2929-2d14-497b-9984-226a5c185fa4
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1871444045710706242}
+        m_MethodName: OnYawMoving
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 42ff0984-ea67-42bb-9490-11dfd22a2fbc
+    m_ActionName: Airplane/YawMoving[/Keyboard/q,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1871444045710706242}
+        m_MethodName: OnThrottle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4e83bc82-f801-4cd7-af72-78669138cd4c
+    m_ActionName: Airplane/Throttle[/Keyboard/z]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 284a22bf-5cfa-49f7-b085-efa74dd301ad
+    m_ActionName: UI/ToggleScoreboard[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 123cec7d-87c2-4506-a374-c1ed4916ac47
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0fbf4b21-6d15-4e0e-b6e4-3d6f385e668c
+    m_ActionName: UI/Right Click[/Mouse/rightButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Airplane
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &417543236296897357
 GameObject:
   m_ObjectHideFlags: 0

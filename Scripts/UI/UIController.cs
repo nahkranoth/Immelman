@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class UIController : MonoBehaviour
+public class UIController : MonoBehaviour, MainInput.IUIActions
 {
     public static UIController instance;
     public Canvas canvas;
@@ -11,23 +12,37 @@ public class UIController : MonoBehaviour
     public GameObject trackerPrefab;
     public Target testTarget;
     public RectTransform throttleIndicator;
+    public RectTransform boostIndicator;
+    public RectTransform healthIndicator;
+    private float startIndicatorWidth;
 
     public GameObject incorrectVersionScreen;
     public ScoreboardScreen scoreBoardScreen;
     public StartScreenController startScreen;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    private void Start()
+    {
+        startIndicatorWidth = boostIndicator.rect.width;
+    }
+
+    public void SetHealth(float normalizedValue)
+    {
+        //healthIndicator.rect.Set(healthIndicator.rect.x, healthIndicator.rect.y, startIndicatorWidth * normalizedValue, healthIndicator.rect.height);
+    }
+
+    public void SetBoost(float normalizedValue)
+    {
+        //boostIndicator.rect.Set(boostIndicator.rect.x, boostIndicator.rect.y, startIndicatorWidth * normalizedValue, boostIndicator.rect.height);
+    }
+
     public void ShowIncorrectVersionScreen()
     {
         incorrectVersionScreen.SetActive(true);
-    }
-    public void ShowScoreboardScreen()
-    {
-        scoreBoardScreen.ShowList();
-        scoreBoardScreen.gameObject.SetActive(true);
-    }
-    public void HideScoreboardScreen()
-    {
-        scoreBoardScreen.gameObject.SetActive(false);
     }
 
     public void SetCamera()
@@ -59,11 +74,6 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
     public void ToggleResetButton(Boolean force)
     {
         resetButton.SetActive(force);
@@ -74,4 +84,39 @@ public class UIController : MonoBehaviour
         GameController.instance.RespawnAirplane();
     }
 
+    public void OnSubmit(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnCancel(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnPoint(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnClick(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnToggleScoreboard(InputAction.CallbackContext context)
+    {//TODO Can show on startscreen
+        if (context.started) scoreBoardScreen.ShowList();
+        if (context.canceled) scoreBoardScreen.HideList();
+    }
+
+    public void OnMiddleClick(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnRightClick(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
 }

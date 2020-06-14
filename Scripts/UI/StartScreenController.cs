@@ -48,25 +48,31 @@ public class StartScreenController : MonoBehaviour
                 }
 
                 result = inputFile.ReadLine();
-
             }
         }
         catch (IOException e)
         {
             Debug.LogWarning("Error in reading birdnames. Whaaah! Birdup! ...SpRiTe...");
+            result = "No name";
         }
         return result;
     }
 
     private int TotalLines(string filePath)
     {
-        using (StreamReader r = new StreamReader(filePath))
+        try
         {
-            int i = 0;
-            while (r.ReadLine() != null) { i++; }
-            return i;
+            using (StreamReader r = new StreamReader(filePath))
+            {
+                int i = 0;
+                while (r.ReadLine() != null) { i++; }
+                return i;
+            }
         }
+        catch (IOException e)
+        {
+            Debug.LogWarning("Error in reading birdnames. Whaaah! Birdup! ...SpRiTe...");
+        }
+        return 999;
     }
-
 }
-

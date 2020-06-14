@@ -8,12 +8,13 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using System;
 using Photon.Realtime;
+using UnityEngine.Video;
 
 public class Airplane : MonoBehaviourPun
 {
 
 	public AirplaneWingController wingController;
-
+	public AirplaneInputController inputController;
 	public Engine engine;
 	public float health;
 	public Rigidbody rigid;
@@ -34,6 +35,9 @@ public class Airplane : MonoBehaviourPun
 
 	private float fireDeltaMs = 0.2f;
 	private float currentFireDeltaMs = 0;
+	private bool firing = false;
+
+
 	private bool active;
 	private RectTransform myTracker;
 	private bool alive = false;
@@ -41,6 +45,8 @@ public class Airplane : MonoBehaviourPun
 	private float waterAltitude = 1221f;
 	private float takeOffAltitude = 600f; //relative to water
 	public float altitude;
+
+	private	const float msToKnots = 1.94384f;
 
 	private void Start()
 	{
@@ -54,6 +60,7 @@ public class Airplane : MonoBehaviourPun
 			engine.activePlayer = false;
 			myTracker = UIController.instance.RegisterTarget(myTarget);//TODO Remove use below
 			GameController.instance.RegisterOtherPlayerAirplane(this.photonView.Owner, this);
+			inputController.active = false;
 		}
 		else//local
 		{
@@ -68,57 +75,50 @@ public class Airplane : MonoBehaviourPun
 		alive = true;
 	}
 
+	private void CheckVelocityActions()
+	{//Watch out - this also runs remotely
+		float velocity = rigid.velocity.magnitude * msToKnots;
+		if(velocity > 350f) waterVapor.SetActive(true);
+		if(velocity < 350f) waterVapor.SetActive(false);
+		if (this.photonView.IsMine == false) return;
+		if (velocity > 500f) GameController.instance.cameraController.EnableScreenShake();
+		if (velocity < 500f) GameController.instance.cameraController.DisableScreenShake();
+	}
+
+	private void CheckAltitudeActions()
+	{
+		altitude = transform.position.y - waterAltitude;
+		if (altitude > takeOffAltitude + 10f) AudioController.instance.TriggerFlyingMusic();
+	}
+
+	public void ToggleGun(bool enable)
+	{
+		if(enable) currentFireDeltaMs = fireDeltaMs;
+		firing = enable;
+	}
+
 	// Update is called once per frame
 	void Update()
 	{
-		if (!active || !alive) return; 
+		if (!active || !alive) return;
+
+		CheckVelocityActions(); //Do check this for public to show the right animations
+
 		if (this.photonView.IsMine == false) return; // Quit if remote
 
-		altitude = transform.position.y - waterAltitude;
+		CheckAltitudeActions();
 
-		if(altitude > takeOffAltitude + 10f)
-		{
-			AudioController.instance.TriggerFlyingMusic();
-		};
-
-		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl))
-		{
-			var engineThrottle = engine.throttle;
-			engineThrottle += (Input.GetKey(KeyCode.LeftShift) ? 1f : 0f) * Time.deltaTime;
-			engineThrottle -= (Input.GetKey(KeyCode.LeftControl) ? 1f : 0f) * Time.deltaTime;
-			engine.SetThrottle(engineThrottle);
-		}
-
-		if (Input.GetMouseButtonDown(0))
-		{
-			currentFireDeltaMs = fireDeltaMs;
-		}
-
-		if (Input.GetMouseButton(0))
+		if (firing)
 		{
 			currentFireDeltaMs += Time.deltaTime;
 			if (fireDeltaMs < currentFireDeltaMs)
 			{
-				GameController.instance.FireBulletFrom(turret.position, transform.rotation, rigid.velocity, PhotonNetwork.LocalPlayer);
 				NetworkManager.instance.SendFireBullet(turret.position, transform.rotation, rigid.velocity);
 				currentFireDeltaMs = 0f;
 			};
 		}
-		if (Input.GetKeyDown(KeyCode.LeftAlt))
-		{
-			GameController.instance.cameraController.lookAt = false;
-		}
 
-		if (Input.GetKey(KeyCode.LeftAlt))
-		{
-			GameController.instance.cameraController.transform.Rotate(new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), transform.rotation.z));
-		}
-
-		if (Input.GetKeyUp(KeyCode.LeftAlt))
-		{
-			GameController.instance.cameraController.lookAt = true;
-		}
-
+		/*
 		if (Input.GetKeyDown(KeyCode.Tab))
 		{
 			UIController.instance.ShowScoreboardScreen();
@@ -127,38 +127,23 @@ public class Airplane : MonoBehaviourPun
 		if (Input.GetKeyUp(KeyCode.Tab))
 		{
 			UIController.instance.HideScoreboardScreen();
-		}
-
-		if (Input.GetMouseButtonDown(1))
-		{
-			this.photonView.RPC("StartBoost", RpcTarget.All);
-		}
-
-		if (Input.GetMouseButtonUp(1))
-		{
-			this.photonView.RPC("EndBoost", RpcTarget.All);
-		}
+		}*/
 
 	}
-	[PunRPC]
+
 	public void StartBoost()
 	{
-		waterVapor.SetActive(true);
-		if (this.photonView.IsMine == false) return;
+		UIController.instance.SetBoost(0f);
 		engine.Boost();
 	}
-	[PunRPC]
 	public void EndBoost()
 	{
-		waterVapor.SetActive(false);
-		if (this.photonView.IsMine == false) return;
 		engine.EndBoost();
 	}
 
 	private void OnGUI()
 	{
 		if (this.photonView.IsMine == false) return;
-		const float msToKnots = 1.94384f;
 		GUI.Label(new Rect(10, 40, 300, 20), string.Format("Speed: {0:0.0} knots", rigid.velocity.magnitude * msToKnots));
 		GUI.Label(new Rect(10, 80, 300, 20), string.Format("Altitude: {0} m", altitude));
 	}
@@ -194,7 +179,7 @@ public class Airplane : MonoBehaviourPun
 		explosion.SetActive(true);
 		smoke.SetActive(true);
 		plane.SetActive(false);
-		this.photonView.RPC("EndBoost", RpcTarget.All);
+		EndBoost();
 
 		if (this.photonView.IsMine == false)//remote
 		{

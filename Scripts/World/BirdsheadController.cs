@@ -5,24 +5,16 @@ public class BirdsheadController : MonoBehaviour
     //TODO Make Multiplayer
 
     public Animation birdHeadOpen;
-    private bool lEyeHit = false;
-    private bool rEyeHit = false;
+    public int triggerAmount = 2;
+    public int currentTriggerCount = 0;
     private void OpenBirdsMouth()
     {
         birdHeadOpen.Play();
     }
 
-    public void HitEye(bool leftEyeNotRight)
+    public void HitEye()
     {
-        if (leftEyeNotRight)
-        {
-            lEyeHit = true;
-        }
-        else
-        {
-            rEyeHit = true;
-        }
-
-        if (lEyeHit && rEyeHit) OpenBirdsMouth();
+        currentTriggerCount++;
+        if (currentTriggerCount == triggerAmount) OpenBirdsMouth();
     }
 }

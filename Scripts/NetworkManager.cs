@@ -60,7 +60,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void SendFireBullet(Vector3 position, Quaternion orientation, Vector3 baseVelocity)
     {
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("FireBullet", RpcTarget.Others, position, orientation, baseVelocity, PhotonNetwork.LocalPlayer);
+        photonView.RPC("FireBullet", RpcTarget.All, position, orientation, baseVelocity, PhotonNetwork.LocalPlayer);
     }
 
     public void CreateRoom(string roomName)

@@ -33,6 +33,11 @@ public class Engine : MonoBehaviour
 		rigid = GetComponentInParent<Rigidbody>();
 	}
 
+	public void ChangeThrottle(float val) {
+
+		SetThrottle(throttle + val);
+	}
+
 	public void SetThrottle(float _throttle)
 	{
 		throttle = Mathf.Clamp01(_throttle);
