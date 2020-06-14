@@ -16,7 +16,8 @@ public class Airplane : MonoBehaviourPun
 	public AirplaneWingController wingController;
 	public AirplaneInputController inputController;
 	public Engine engine;
-	public float health;
+	public float currentHealth;
+	public float maxHealth;
 	public Rigidbody rigid;
 	public Transform turret;
 
@@ -126,9 +127,12 @@ public class Airplane : MonoBehaviourPun
 	[PunRPC]
 	public void DamageMe(float damage, string ownerID)
 	{
-		health -= damage;
+		currentHealth -= damage;
 		smoke.SetActive(true);
-		if(health <= 0)
+
+		UIController.instance.SetHealth(currentHealth / maxHealth);
+
+		if (currentHealth <= 0)
 		{
 			if (this.photonView.IsMine)//local
 			{
@@ -194,6 +198,9 @@ public class Airplane : MonoBehaviourPun
 		}
 		else //local
 		{
+			currentHealth = maxHealth;
+			engine.ResetBoost();
+			UIController.instance.SetHealth(1f);
 			UIController.instance.ToggleResetButton(false);
 		}
 	}

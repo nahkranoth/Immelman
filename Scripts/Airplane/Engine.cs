@@ -62,6 +62,12 @@ public class Engine : MonoBehaviour
 		}
 	}
 
+	public void ResetBoost()
+	{
+		boosting = false;
+		collectedBoost = 0f;
+	}
+
 	public void Boost()
 	{
 		thrust = boostSpeed;

@@ -155,7 +155,8 @@ MonoBehaviour:
   wingController: {fileID: 9109749010725955679}
   inputController: {fileID: 1871444045710706242}
   engine: {fileID: 1850828537}
-  health: 2
+  currentHealth: 0
+  maxHealth: 0
   rigid: {fileID: 54389539974053924}
   turret: {fileID: 7240360620423045240}
   explosion: {fileID: 3476434450405928080}
