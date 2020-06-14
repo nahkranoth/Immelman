@@ -116,6 +116,10 @@ MonoBehaviour:
   activePlayer: 1
   boostSpeed: 220000
   normalSpeed: 60000
+  boosting: 0
+  maxBoost: 100
+  boostGrowth: 0.2
+  boostShrink: 0.6
   startEngineStart:
     idInternal: 0
     valueGuidInternal: 

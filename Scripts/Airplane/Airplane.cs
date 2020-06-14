@@ -37,7 +37,6 @@ public class Airplane : MonoBehaviourPun
 	private float currentFireDeltaMs = 0;
 	private bool firing = false;
 
-
 	private bool active;
 	private RectTransform myTracker;
 	private bool alive = false;
@@ -111,34 +110,10 @@ public class Airplane : MonoBehaviourPun
 		if (firing)
 		{
 			currentFireDeltaMs += Time.deltaTime;
-			if (fireDeltaMs < currentFireDeltaMs)
-			{
-				NetworkManager.instance.SendFireBullet(turret.position, transform.rotation, rigid.velocity);
-				currentFireDeltaMs = 0f;
-			};
+			if (fireDeltaMs > currentFireDeltaMs) return;
+			NetworkManager.instance.SendFireBullet(turret.position, transform.rotation, rigid.velocity);
+			currentFireDeltaMs = 0f;
 		}
-
-		/*
-		if (Input.GetKeyDown(KeyCode.Tab))
-		{
-			UIController.instance.ShowScoreboardScreen();
-		}
-
-		if (Input.GetKeyUp(KeyCode.Tab))
-		{
-			UIController.instance.HideScoreboardScreen();
-		}*/
-
-	}
-
-	public void StartBoost()
-	{
-		UIController.instance.SetBoost(0f);
-		engine.Boost();
-	}
-	public void EndBoost()
-	{
-		engine.EndBoost();
 	}
 
 	private void OnGUI()
@@ -179,7 +154,7 @@ public class Airplane : MonoBehaviourPun
 		explosion.SetActive(true);
 		smoke.SetActive(true);
 		plane.SetActive(false);
-		EndBoost();
+		engine.EndBoost();
 
 		if (this.photonView.IsMine == false)//remote
 		{

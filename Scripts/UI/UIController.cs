@@ -32,12 +32,12 @@ public class UIController : MonoBehaviour, MainInput.IUIActions
 
     public void SetHealth(float normalizedValue)
     {
-        //healthIndicator.rect.Set(healthIndicator.rect.x, healthIndicator.rect.y, startIndicatorWidth * normalizedValue, healthIndicator.rect.height);
+        healthIndicator.sizeDelta = new Vector2(startIndicatorWidth * normalizedValue, healthIndicator.rect.height);
     }
 
     public void SetBoost(float normalizedValue)
     {
-        //boostIndicator.rect.Set(boostIndicator.rect.x, boostIndicator.rect.y, startIndicatorWidth * normalizedValue, boostIndicator.rect.height);
+        boostIndicator.sizeDelta = new Vector2(startIndicatorWidth * normalizedValue, boostIndicator.rect.height);
     }
 
     public void ShowIncorrectVersionScreen()

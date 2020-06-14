@@ -23,6 +23,12 @@ public class Engine : MonoBehaviour
 	public float boostSpeed = 220000f;
 	public float normalSpeed = 60000f;
 
+	public bool boosting = false;
+	private float collectedBoost = 0f;
+	public float maxBoost;
+	public float boostGrowth;
+	public float boostShrink;
+
 	public AK.Wwise.Event startEngineStart;
 	public AK.Wwise.Event startEngineBoost;
 	public AK.Wwise.Event startEngineRunning;
@@ -59,12 +65,18 @@ public class Engine : MonoBehaviour
 	public void Boost()
 	{
 		thrust = boostSpeed;
+		boosting = true;
+		
+		//Audio
 		startEngineBoost.Post(gameObject);
 	}
 
 	public void EndBoost()
 	{
+		boosting = false;
 		thrust = normalSpeed;
+		
+		//Audio
 		if(throttle == 0)
 		{
 			stopEngineRunning.Post(gameObject);
@@ -75,10 +87,14 @@ public class Engine : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (rigid != null && activePlayer)
-		{
-			rigid.AddRelativeForce(Vector3.forward * thrust * throttle, ForceMode.Force);
-		}
+		if (rigid == null && !activePlayer) return;
+
+		rigid.AddRelativeForce(Vector3.forward * thrust * throttle, ForceMode.Force);
+
+		if(!boosting) collectedBoost = Mathf.Min(maxBoost, collectedBoost + boostGrowth);
+		if(boosting) collectedBoost = Mathf.Max(0f, collectedBoost - boostShrink);
+		if (collectedBoost <= 0f) EndBoost();
+		UIController.instance.SetBoost(collectedBoost / maxBoost);
 	}
 
 }

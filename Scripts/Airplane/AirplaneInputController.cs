@@ -26,8 +26,8 @@ public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
 
     public void OnBoost(InputAction.CallbackContext context)
     {
-        if (context.started) airplane.StartBoost();
-        if (context.canceled) airplane.EndBoost();
+        if (context.started) engine.Boost();
+        if (context.canceled) engine.EndBoost();
     }
 
     public void OnFreeLook(InputAction.CallbackContext context)
