@@ -21,25 +21,30 @@ public class AirplaneWingController : MonoBehaviourPun
 
     public bool active;
 
+    private bool applyingMoveControls;
+    private Vector2 moveAxis;
+
     public void Awake()
     {
         DeactivateWings();
     }
     // Update is called once per frame
 
-    /*void FixedUpdate()
+    void FixedUpdate()
     {
         if (!active) return;
+        if (!applyingMoveControls) return;
+
         var negativeThrottle = 1f - engine.throttle;
-
-        var turn = new Vector3(Input.GetAxis("Vertical"), 0f, -Input.GetAxis("Horizontal")) * negativeThrottle * 200000f;
+        var turn = new Vector3(moveAxis.y, 0f, -moveAxis.x) * negativeThrottle * 200000f;
         rigid.AddRelativeTorque(turn, ForceMode.Force);
-    }*/
+    }
 
-    public void SetPitchRollDeflection(Vector2 axis)
+    public void SetPitchRollDeflection(Vector2 axis, bool enabled)
     {
         if (!active) return;
-
+        applyingMoveControls = enabled;
+        moveAxis = axis;
         elevator.targetDeflection = -axis.y;
         aileronLeft.targetDeflection = -axis.x;
         aileronRight.targetDeflection = axis.x;

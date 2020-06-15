@@ -32,12 +32,12 @@ public class UIController : MonoBehaviour, MainInput.IUIActions
 
     public void SetHealth(float normalizedValue)
     {
-        healthIndicator.sizeDelta = new Vector2(startIndicatorWidth * normalizedValue, healthIndicator.rect.height);
+        healthIndicator.sizeDelta = new Vector2(startIndicatorWidth * normalizedValue, 20f);
     }
 
     public void SetBoost(float normalizedValue)
     {
-        boostIndicator.sizeDelta = new Vector2(startIndicatorWidth * normalizedValue, boostIndicator.rect.height);
+        boostIndicator.sizeDelta = new Vector2(startIndicatorWidth * normalizedValue, 20f);
     }
 
     public void ShowIncorrectVersionScreen()

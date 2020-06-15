@@ -45,7 +45,9 @@ public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
 
     public void OnMoving(InputAction.CallbackContext context)
     {
-        airplaneWingController.SetPitchRollDeflection(context.ReadValue<Vector2>());
+        bool enabled = context.started;
+        if(!context.started && !context.canceled) enabled = true;
+        airplaneWingController.SetPitchRollDeflection(context.ReadValue<Vector2>(), enabled);
     }
 
     public void OnYawMoving(InputAction.CallbackContext context)

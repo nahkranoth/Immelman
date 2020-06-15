@@ -170,8 +170,8 @@ public class Airplane : MonoBehaviourPun
 		explosion.SetActive(true);
 		smoke.SetActive(true);
 		plane.SetActive(false);
+		waterVapor.SetActive(false);
 		engine.EndBoost();
-
 		if (this.photonView.IsMine == false)//remote
 		{
 			myTracker.gameObject.SetActive(false);
