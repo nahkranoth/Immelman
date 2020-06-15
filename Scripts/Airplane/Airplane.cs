@@ -6,17 +6,13 @@
 using UnityEngine;
 using Photon.Pun;
 using ExitGames.Client.Photon;
-using System;
 using Photon.Realtime;
-using UnityEngine.Video;
-
 public class Airplane : MonoBehaviourPun
 {
-
 	public AirplaneWingController wingController;
 	public AirplaneInputController inputController;
 	public Engine engine;
-	public float currentHealth;
+	private float currentHealth;
 	public float maxHealth;
 	public Rigidbody rigid;
 	public Transform turret;
@@ -31,12 +27,19 @@ public class Airplane : MonoBehaviourPun
 	public TrailRenderer leftTrail;
 	public TrailRenderer rightTrail;
 
+	public WheelCollider backWheel;
+	public WheelCollider leftWheel;
+	public WheelCollider rightWheel;
+
 	public float boostSpeed = 220000f;
 	public float trim;
 
 	private float fireDeltaMs = 0.2f;
 	private float currentFireDeltaMs = 0;
 	private bool firing = false;
+
+	private bool braking = false;
+	private float brakeFoce = 10000f;
 
 	private bool active;
 	private RectTransform myTracker;
@@ -96,6 +99,12 @@ public class Airplane : MonoBehaviourPun
 		if(enable) currentFireDeltaMs = fireDeltaMs;
 		firing = enable;
 	}
+	public void ToggleBrake(bool enabled)
+	{
+		
+		if (enabled) braking = true;
+		if (!enabled) braking = false;
+	}
 
 	// Update is called once per frame
 	void Update()
@@ -115,6 +124,9 @@ public class Airplane : MonoBehaviourPun
 			NetworkManager.instance.SendFireBullet(turret.position, transform.rotation, rigid.velocity);
 			currentFireDeltaMs = 0f;
 		}
+
+		if (braking) backWheel.brakeTorque = leftWheel.brakeTorque = rightWheel.brakeTorque = brakeFoce;
+		else backWheel.brakeTorque = leftWheel.brakeTorque = rightWheel.brakeTorque = 0f;
 	}
 
 	private void OnGUI()
@@ -183,7 +195,7 @@ public class Airplane : MonoBehaviourPun
 		active = true;
 		alive = true;
 		transform.position = GameController.instance.startNode.position;
-		transform.rotation = Quaternion.identity;
+		transform.rotation = GameController.instance.startNode.rotation;
 		explosion.SetActive(false);
 		smoke.SetActive(false);
 		plane.SetActive(true);

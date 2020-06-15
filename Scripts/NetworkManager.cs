@@ -100,7 +100,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Joined Room");
         base.OnJoinedRoom();
-        GameController.instance.PlayerAirplaneInit(PhotonNetwork.Instantiate(this.plane.name, GameController.instance.startNode.position, Quaternion.identity, 0).GetComponent<Airplane>());
+        GameController.instance.PlayerAirplaneInit(PhotonNetwork.Instantiate(this.plane.name, GameController.instance.startNode.position, GameController.instance.startNode.rotation, 0).GetComponent<Airplane>());
     }
 
     public override void OnCreatedRoom()

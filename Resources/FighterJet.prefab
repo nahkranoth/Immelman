@@ -155,8 +155,7 @@ MonoBehaviour:
   wingController: {fileID: 9109749010725955679}
   inputController: {fileID: 1871444045710706242}
   engine: {fileID: 1850828537}
-  currentHealth: 0
-  maxHealth: 0
+  maxHealth: 2
   rigid: {fileID: 54389539974053924}
   turret: {fileID: 7240360620423045240}
   explosion: {fileID: 3476434450405928080}
@@ -167,6 +166,9 @@ MonoBehaviour:
   cameraGimbal: {fileID: 5928330904052546140}
   leftTrail: {fileID: 1106466216661258098}
   rightTrail: {fileID: 7593753181666772577}
+  backWheel: {fileID: 7306484080046411032}
+  leftWheel: {fileID: 8707087290533653353}
+  rightWheel: {fileID: 9221591740684148862}
   boostSpeed: 220000
   trim: 40
   altitude: 0
@@ -425,6 +427,21 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0fbf4b21-6d15-4e0e-b6e4-3d6f385e668c
     m_ActionName: UI/Right Click[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1871444045710706242}
+        m_MethodName: OnBrake
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4b95ec41-3877-4212-9c37-2b4d580205e7
+    m_ActionName: Airplane/Brake[/Keyboard/b]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Airplane

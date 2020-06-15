@@ -65,4 +65,10 @@ public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
         if (context.started) throttle = true;
         if (context.canceled) throttle = false;
     }
+
+    public void OnBrake(InputAction.CallbackContext context)
+    {
+        if (context.started) airplane.ToggleBrake(true);
+        if (context.canceled) airplane.ToggleBrake(false);
+    }
 }

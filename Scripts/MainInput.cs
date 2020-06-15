@@ -65,6 +65,14 @@ public class @MainInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Brake"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b95ec41-3877-4212-9c37-2b4d580205e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -221,6 +229,17 @@ public class @MainInput : IInputActionCollection, IDisposable
                     ""action"": ""Throttle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d389aa2b-8ab2-4a2f-81ac-04dad5f55029"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Brake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -431,6 +450,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         m_Airplane_Boost = m_Airplane.FindAction("Boost", throwIfNotFound: true);
         m_Airplane_FreeLook = m_Airplane.FindAction("FreeLook", throwIfNotFound: true);
         m_Airplane_Throttle = m_Airplane.FindAction("Throttle", throwIfNotFound: true);
+        m_Airplane_Brake = m_Airplane.FindAction("Brake", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -495,6 +515,7 @@ public class @MainInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Airplane_Boost;
     private readonly InputAction m_Airplane_FreeLook;
     private readonly InputAction m_Airplane_Throttle;
+    private readonly InputAction m_Airplane_Brake;
     public struct AirplaneActions
     {
         private @MainInput m_Wrapper;
@@ -505,6 +526,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         public InputAction @Boost => m_Wrapper.m_Airplane_Boost;
         public InputAction @FreeLook => m_Wrapper.m_Airplane_FreeLook;
         public InputAction @Throttle => m_Wrapper.m_Airplane_Throttle;
+        public InputAction @Brake => m_Wrapper.m_Airplane_Brake;
         public InputActionMap Get() { return m_Wrapper.m_Airplane; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -532,6 +554,9 @@ public class @MainInput : IInputActionCollection, IDisposable
                 @Throttle.started -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnThrottle;
                 @Throttle.performed -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnThrottle;
                 @Throttle.canceled -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnThrottle;
+                @Brake.started -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnBrake;
+                @Brake.performed -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnBrake;
+                @Brake.canceled -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnBrake;
             }
             m_Wrapper.m_AirplaneActionsCallbackInterface = instance;
             if (instance != null)
@@ -554,6 +579,9 @@ public class @MainInput : IInputActionCollection, IDisposable
                 @Throttle.started += instance.OnThrottle;
                 @Throttle.performed += instance.OnThrottle;
                 @Throttle.canceled += instance.OnThrottle;
+                @Brake.started += instance.OnBrake;
+                @Brake.performed += instance.OnBrake;
+                @Brake.canceled += instance.OnBrake;
             }
         }
     }
@@ -647,6 +675,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         void OnBoost(InputAction.CallbackContext context);
         void OnFreeLook(InputAction.CallbackContext context);
         void OnThrottle(InputAction.CallbackContext context);
+        void OnBrake(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
