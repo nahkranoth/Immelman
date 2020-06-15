@@ -16,10 +16,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public GameObject plane;
     public GlobalSettings globalSettings;
     private string versionurl = "http://joeyvanderkaaij.com/sharing/Immelman/version.json";
-
+    public bool playOnMainServer = false;
     private void Awake()
     {
         instance = this;
+    }
+
+    private string GetRoomName()
+    {
+#if UNITY_EDITOR
+        return playOnMainServer ? "mainroom" : "testroom1";
+#else
+        return "mainroom";
+#endif
     }
 
     public void DownloadLatestVersion()
@@ -48,7 +57,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void StartGame(string nickName)
     {
         PhotonNetwork.LocalPlayer.NickName = nickName;
-        CreateRoom("testroom");
+        CreateRoom(GetRoomName());
     }
 
     [PunRPC]
@@ -84,7 +93,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Debug.Log("Create Room Failed");
-        JoinRoom("testroom");
+        JoinRoom(GetRoomName());
         base.OnCreateRoomFailed(returnCode, message);
     }
 

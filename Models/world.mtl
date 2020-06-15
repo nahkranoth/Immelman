@@ -3,9 +3,9 @@
 newmtl default
 Kd 1 1 1
 
-newmtl Cave
+newmtl Black
 Ka 1 1 1
-Kd 0.07000000029802 0.03383333235979 0
+Kd 0 0 0
 Ks 1 1 1
 Ns 50
 illum 7
@@ -17,9 +17,9 @@ Ks 1 1 1
 Ns 50
 illum 7
 
-newmtl Black
+newmtl Cave
 Ka 1 1 1
-Kd 0 0 0
+Kd 0.07000000029802 0.03383333235979 0
 Ks 1 1 1
 Ns 50
 illum 7

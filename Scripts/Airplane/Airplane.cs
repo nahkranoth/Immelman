@@ -74,6 +74,7 @@ public class Airplane : MonoBehaviourPun
 			hashTable["kills"] = 0;
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
 			active = true;
+			currentHealth = maxHealth;
 		}
 		alive = true;
 	}
@@ -139,10 +140,13 @@ public class Airplane : MonoBehaviourPun
 	[PunRPC]
 	public void DamageMe(float damage, string ownerID)
 	{
-		currentHealth -= damage;
 		smoke.SetActive(true);
 
-		UIController.instance.SetHealth(currentHealth / maxHealth);
+		if (this.photonView.IsMine)//local
+		{
+			currentHealth -= damage;
+			UIController.instance.SetHealth(currentHealth / maxHealth);
+		}
 
 		if (currentHealth <= 0)
 		{
@@ -155,8 +159,8 @@ public class Airplane : MonoBehaviourPun
 					hashTable["kills"] = kills + 1;
 					bulletOwner.SetCustomProperties(hashTable);
 				}
+				this.photonView.RPC("KillMe", RpcTarget.All);
 			}
-			this.photonView.RPC("KillMe", RpcTarget.All);
 		}
 	}
 
@@ -169,9 +173,10 @@ public class Airplane : MonoBehaviourPun
 		active = false;
 		explosion.SetActive(true);
 		smoke.SetActive(true);
-		plane.SetActive(false);
 		waterVapor.SetActive(false);
+		plane.SetActive(false);
 		engine.EndBoost();
+
 		if (this.photonView.IsMine == false)//remote
 		{
 			myTracker.gameObject.SetActive(false);
@@ -196,9 +201,9 @@ public class Airplane : MonoBehaviourPun
 		alive = true;
 		transform.position = GameController.instance.startNode.position;
 		transform.rotation = GameController.instance.startNode.rotation;
+		plane.SetActive(true);
 		explosion.SetActive(false);
 		smoke.SetActive(false);
-		plane.SetActive(true);
 		rigid.isKinematic = false;
 		leftTrail.Clear();
 		rightTrail.Clear();
@@ -228,6 +233,7 @@ public class Airplane : MonoBehaviourPun
 		if (this.photonView.IsMine == false) return;
 		if (collision.gameObject.tag == "Kill")
 		{
+			Debug.Log("kill me through collision");
 			this.photonView.RPC("KillMe", RpcTarget.All);
 		}
 		if (collision.gameObject.tag == "Damage")

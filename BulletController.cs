@@ -16,7 +16,7 @@ public class BulletController : MonoBehaviour, IDamageHit
     public Player owner { get { return currentOwner; } set { currentOwner = value; } }
 
     private float timeDelta;
-    
+
 
     public void Fire(Vector3 position, Quaternion orientation, Vector3 baseVelocity, Player _owner)
     {
@@ -34,9 +34,18 @@ public class BulletController : MonoBehaviour, IDamageHit
         timeDelta += Time.deltaTime;
         if (timeDelta > liveTime)
         {
-            stopEvent.Post(gameObject);
-            Destroy(gameObject);
+            DestroyMe();
         }
     }
-    
+
+    public void DestroyMe()
+    {
+        stopEvent.Post(gameObject);
+        Destroy(gameObject);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        DestroyMe();
+    }
 }

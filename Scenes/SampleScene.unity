@@ -336,7 +336,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147598780}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: 36315b20f9283c448afceef40bd7b06e, type: 3}
 --- !u!4 &147598784
 Transform:
   m_ObjectHideFlags: 0
@@ -345,7 +345,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147598780}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1221, z: 0}
+  m_LocalPosition: {x: 0, y: 1255, z: 0}
   m_LocalScale: {x: 16000, y: 16000, z: 16000}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1241,6 +1241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plane: {fileID: 1281116439405552, guid: 25e35ad813a12d04982b4b3e6e67e3dd, type: 3}
+  playOnMainServer: 1
 --- !u!114 &1867790432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1528,6 +1529,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0fbf4b21-6d15-4e0e-b6e4-3d6f385e668c
     m_ActionName: UI/Right Click[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4b95ec41-3877-4212-9c37-2b4d580205e7
+    m_ActionName: Airplane/Brake[/Keyboard/b]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 666af252-634a-4da5-b1d3-ef1bf2a94f29
+    m_ActionName: Airplane/MouseLook[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI
@@ -2077,25 +2086,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3798639640349888916, guid: 9765677e7ddf5574ea7383c3d138f7c9,
-        type: 3}
-      propertyPath: viewIdField
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4405320002908992207, guid: 9765677e7ddf5574ea7383c3d138f7c9,
         type: 3}
       propertyPath: m_Name
       value: world
-      objectReference: {fileID: 0}
-    - target: {fileID: 4405320002908992207, guid: 9765677e7ddf5574ea7383c3d138f7c9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8965226638214937285, guid: 9765677e7ddf5574ea7383c3d138f7c9,
-        type: 3}
-      propertyPath: viewIdField
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9765677e7ddf5574ea7383c3d138f7c9, type: 3}

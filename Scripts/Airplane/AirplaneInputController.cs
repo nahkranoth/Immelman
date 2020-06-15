@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
+public class AirplaneInputController : MonoBehaviourPun, MainInput.IAirplaneActions
 {
     public Airplane airplane;
     public Engine engine;
@@ -13,20 +14,17 @@ public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
     private float throttleIntensity = 0.04f;
 
     private bool freeLook = false;
-    private Vector2 mousePosition = Vector2.zero;
-
-
 
     private void Update()
     {
-        if (throttle) engine.ChangeThrottle(throttleAmount);
+        if (this.photonView.IsMine == false) return;
 
+        if (throttle) engine.ChangeThrottle(throttleAmount);
         //TODO: Need camera values for freelook
         if (freeLook) {
             GameController.instance.cameraController.RotateCamera(Mouse.current.position.ReadValue(), transform.position);
         }
     }
-
 
     public void OnBoost(InputAction.CallbackContext context)
     {
@@ -80,7 +78,5 @@ public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
 
     public void OnMouseLook(InputAction.CallbackContext context)
     {
-        Debug.Log(" On Mouse Look ");
-        mousePosition = context.ReadValue<Vector2>();
     }
 }
