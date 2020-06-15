@@ -13,6 +13,9 @@ public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
     private float throttleIntensity = 0.04f;
 
     private bool freeLook = false;
+    private Vector2 mousePosition = Vector2.zero;
+
+
 
     private void Update()
     {
@@ -20,6 +23,7 @@ public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
 
         //TODO: Need camera values for freelook
         if (freeLook) {
+            GameController.instance.cameraController.RotateCamera(Mouse.current.position.ReadValue(), transform.position);
         }
     }
 
@@ -34,11 +38,11 @@ public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
     {
         if (context.started)
         {
-            GameController.instance.cameraController.lookAt = false;
+            GameController.instance.cameraController.StartRotate();
             freeLook = true;
         }else if (context.canceled)
         {
-            GameController.instance.cameraController.lookAt = true;
+            GameController.instance.cameraController.StopRotate();
             freeLook = false;
         }
     }
@@ -72,5 +76,11 @@ public class AirplaneInputController : MonoBehaviour, MainInput.IAirplaneActions
     {
         if (context.started) airplane.ToggleBrake(true);
         if (context.canceled) airplane.ToggleBrake(false);
+    }
+
+    public void OnMouseLook(InputAction.CallbackContext context)
+    {
+        Debug.Log(" On Mouse Look ");
+        mousePosition = context.ReadValue<Vector2>();
     }
 }

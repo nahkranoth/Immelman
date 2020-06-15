@@ -42,6 +42,7 @@ public class AirplaneWingController : MonoBehaviourPun
 
     public void SetPitchRollDeflection(Vector2 axis, bool enabled)
     {
+        Debug.Log("Set Pitch Roll Defelict");
         if (!active) return;
         applyingMoveControls = enabled;
         moveAxis = axis;

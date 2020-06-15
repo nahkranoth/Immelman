@@ -68,7 +68,7 @@ public class Airplane : MonoBehaviourPun
 		else//local
 		{
 			wingController.ActivateWings();
-			CursorController.instance.RequestHide();
+			CursorController.instance.ForceHide();
 			Hashtable hashTable = new Hashtable();
 			hashTable["deaths"] = 0;
 			hashTable["kills"] = 0;
@@ -179,7 +179,7 @@ public class Airplane : MonoBehaviourPun
 		else //local
 		{
 			engine.SetThrottle(0f);
-			CursorController.instance.RequestShow();
+			CursorController.instance.ForceShow();
 			UIController.instance.ToggleResetButton(true);
 
 			Hashtable hashTable = new Hashtable();
@@ -202,7 +202,7 @@ public class Airplane : MonoBehaviourPun
 		rigid.isKinematic = false;
 		leftTrail.Clear();
 		rightTrail.Clear();
-		CursorController.instance.RequestHide();
+		CursorController.instance.ForceHide();
 		if (this.photonView.IsMine == false)//remote
 		{
 			myTracker.gameObject.SetActive(true);

@@ -73,6 +73,14 @@ public class @MainInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""MouseLook"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""666af252-634a-4da5-b1d3-ef1bf2a94f29"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -238,6 +246,17 @@ public class @MainInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Brake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ded700ee-9c63-44f4-89f9-f03692b44ca0"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -451,6 +470,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         m_Airplane_FreeLook = m_Airplane.FindAction("FreeLook", throwIfNotFound: true);
         m_Airplane_Throttle = m_Airplane.FindAction("Throttle", throwIfNotFound: true);
         m_Airplane_Brake = m_Airplane.FindAction("Brake", throwIfNotFound: true);
+        m_Airplane_MouseLook = m_Airplane.FindAction("MouseLook", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -516,6 +536,7 @@ public class @MainInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Airplane_FreeLook;
     private readonly InputAction m_Airplane_Throttle;
     private readonly InputAction m_Airplane_Brake;
+    private readonly InputAction m_Airplane_MouseLook;
     public struct AirplaneActions
     {
         private @MainInput m_Wrapper;
@@ -527,6 +548,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         public InputAction @FreeLook => m_Wrapper.m_Airplane_FreeLook;
         public InputAction @Throttle => m_Wrapper.m_Airplane_Throttle;
         public InputAction @Brake => m_Wrapper.m_Airplane_Brake;
+        public InputAction @MouseLook => m_Wrapper.m_Airplane_MouseLook;
         public InputActionMap Get() { return m_Wrapper.m_Airplane; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -557,6 +579,9 @@ public class @MainInput : IInputActionCollection, IDisposable
                 @Brake.started -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnBrake;
                 @Brake.performed -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnBrake;
                 @Brake.canceled -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnBrake;
+                @MouseLook.started -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnMouseLook;
+                @MouseLook.performed -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnMouseLook;
+                @MouseLook.canceled -= m_Wrapper.m_AirplaneActionsCallbackInterface.OnMouseLook;
             }
             m_Wrapper.m_AirplaneActionsCallbackInterface = instance;
             if (instance != null)
@@ -582,6 +607,9 @@ public class @MainInput : IInputActionCollection, IDisposable
                 @Brake.started += instance.OnBrake;
                 @Brake.performed += instance.OnBrake;
                 @Brake.canceled += instance.OnBrake;
+                @MouseLook.started += instance.OnMouseLook;
+                @MouseLook.performed += instance.OnMouseLook;
+                @MouseLook.canceled += instance.OnMouseLook;
             }
         }
     }
@@ -676,6 +704,7 @@ public class @MainInput : IInputActionCollection, IDisposable
         void OnFreeLook(InputAction.CallbackContext context);
         void OnThrottle(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
+        void OnMouseLook(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
