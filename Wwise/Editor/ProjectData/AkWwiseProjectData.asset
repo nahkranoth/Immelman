@@ -91,7 +91,7 @@ MonoBehaviour:
       - ElementName: StartEngineBoost
         ObjectType: 3
       Path: Default Work Unit\StartEngineBoost
-      maxAttenuation: 0
+      maxAttenuation: 100000000
       maxDuration: -1
       minDuration: -1
     - name: StartEngineRunning
@@ -103,7 +103,7 @@ MonoBehaviour:
       - ElementName: StartEngineRunning
         ObjectType: 3
       Path: Default Work Unit\StartEngineRunning
-      maxAttenuation: 0
+      maxAttenuation: 100000000
       maxDuration: -1
       minDuration: -1
     - name: StartEngineStart
@@ -115,7 +115,7 @@ MonoBehaviour:
       - ElementName: StartEngineStart
         ObjectType: 3
       Path: Default Work Unit\StartEngineStart
-      maxAttenuation: 0
+      maxAttenuation: 100000000
       maxDuration: -1
       minDuration: -1
     - name: StopBullet
@@ -139,7 +139,7 @@ MonoBehaviour:
       - ElementName: StopEngineRunning
         ObjectType: 3
       Path: Default Work Unit\StopEngineRunning
-      maxAttenuation: 0
+      maxAttenuation: 100000000
       maxDuration: -1
       minDuration: -1
   RtpcWwu:

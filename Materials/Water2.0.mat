@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Water
+  m_Name: Water2.0
   m_Shader: {fileID: 4800000, guid: 7c8d5933adbdf0e4eada0acde5a0bbdc, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -37,22 +37,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DispTex:
         m_Texture: {fileID: 2800000, guid: 2148b4470ce0a5149ab62db1907fd589, type: 3}
-        m_Scale: {x: 4, y: 4}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 4, y: 4}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
+    - _FaceTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Noise:
-        m_Texture: {fileID: 2800000, guid: 2148b4470ce0a5149ab62db1907fd589, type: 3}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -68,33 +68,45 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Alpha: 1
     - _BumpScale: 1
+    - _ColorMask: 15
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Displacement: 0.006
+    - _Displacement: 0.177
     - _DstBlend: 0
-    - _EdgeLength: 27.1
-    - _Gloss: 0.535
+    - _EdgeLength: 21.4
     - _GlossMapScale: 1
-    - _Glossiness: 0.748
+    - _Glossiness: 0.529
     - _GlossyReflections: 1
-    - _Metalic: 0.429
-    - _Metallic: 0.051
+    - _MaskSoftnessX: 0
+    - _MaskSoftnessY: 0
+    - _Metallic: 0.259
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Padding: 0
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
-    - _Specular: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Timer: 0.04
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _Timer: 0.721
     - _UVSec: 0
-    - _WaveSpeed: 0.016
+    - _VertexOffsetX: 0
+    - _VertexOffsetY: 0
     - _YOffset: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0, g: 0.827451, b: 1, a: 1}
-    - _ColorMax: {r: 0, g: 0.8310704, b: 1, a: 1}
-    - _ColorMin: {r: 0, g: 0.60537386, b: 1, a: 1}
+    - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
+    - _Color: {r: 0, g: 1, b: 1, a: 1}
+    - _ColorMax: {r: 0.4764151, g: 1, b: 0.9769491, a: 1}
+    - _ColorMin: {r: 0, g: 0.6702621, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SpecColor: {r: 1, g: 0.9914961, b: 0, a: 1}
+    - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MaxColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MinColor: {r: 1, g: 1, b: 0, a: 1}
+    - _SpecColor: {r: 1, g: 0, b: 0, a: 1}
